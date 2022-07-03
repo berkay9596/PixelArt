@@ -37,12 +37,13 @@ const Navbar = () => {
               </div>
             </label>
             <ul
+              id="navbar"
               tabindex="0"
-              style={{ background: "#F000B8" }}
-              class="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-52"
+              // style={{ background: "#F000B8" }}
+              class="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-36 items-center"
             >
               <li onClick={() => setIsLoggedIn(false)}>
-                <a>Logout</a>
+                <a id="logout">LOGOUT</a>
               </li>
             </ul>
           </div>

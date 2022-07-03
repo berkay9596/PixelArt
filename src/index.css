@@ -45,3 +45,16 @@ ul,li{
 #login:hover{
   opacity: 0.6;
 }
+
+#navbar{
+  @apply bg-secondary;
+}
+
+#navbar:hover{
+  opacity: 0.7;
+}
+
+#logout{
+  font-size: 0.875rem;
+  font-weight: 600;
+}
