@@ -24,6 +24,7 @@ function Canvas() {
   const [currentSelectedColor, setCurrentSelectedColor] = useState(colors[0]);
   const [value, setValue] = useState(0);
   const { grid, setGrid } = useContext(CanvasContext);
+  const [count, setCount] = useState(0);
   const fillColor = (rowIndex, colIndex) => {
     let newGrid = [...grid];
     if (
@@ -51,8 +52,8 @@ function Canvas() {
           <h3 class="font-bold text-lg">
             You are about to own a pixel at Desopixelart
           </h3>
-          <p class="py-4">1 Pixel = 0.1 Deso</p>
-          <p class="py-4">Do you confirm the transaction?</p>
+          <p className="py-3">Total Price : {count / 10} Deso</p>
+          <p class="py-3">Do you confirm the transaction?</p>
 
           <div class="modal-action">
             <label
@@ -65,7 +66,7 @@ function Canvas() {
             >
               Confirm
             </label>
-            <label for="my-modal" class="btn btn-secondary">
+            <label id="cancel" for="my-modal" class="btn btn-secondary ">
               Cancel
             </label>
           </div>
@@ -82,17 +83,13 @@ function Canvas() {
               <div
                 onClick={() => {
                   fillColor(rowIndex, colIndex);
-                  document.getElementById("my-modal").checked = true;
+                  setCount((prev) => prev + 1);
+                  // document.getElementById("my-modal").checked = true;
                   console.log("coldİndex", rowIndex, colIndex);
                 }}
                 className={`
-                w-3  md:w-5 sm:w-5
-                h-3   md:h-5 sm:h-5 transition-all cursor-pointer ${
-                  // col || "bg-zinc-200"
-                  // col || "bg-orange-200"
-                  // col || "bg-sky-100"
-                  // col || "bg-indigo-200"
-                  // col || "bg-fuchsia-100	"
+                w-4  md:w-5 sm:w-5
+                h-4   md:h-5 sm:h-5 transition-all cursor-pointer ${
                   col || "bg-purple-200"
                 }`}
               />
@@ -103,40 +100,49 @@ function Canvas() {
       <div
         style={{
           display: "flex",
+          alignItems: "center",
           justifyContent: "center",
+          flexWrap: "wrap",
+          flexDirection: "column",
         }}
-        className="gap-1 flex-wrap"
       >
-        {colors.map((color) => (
-          <button
-            onClick={() => setCurrentSelectedColor(color)}
-            className={`w-10 h-10 flex items-center justify-center rounded-full ${color}`}
-          >
-            <div
-              className={`${
-                color === currentSelectedColor ? "w-8 h-8" : "w-0 h-0"
-              } transition-all bg-zinc-800 rounded-full`}
-            />
-          </button>
-        ))}
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+          className="gap-1 flex-wrap"
+        >
+          {colors.map((color) => (
+            <button
+              onClick={() => setCurrentSelectedColor(color)}
+              className={`w-10 h-10 flex items-center justify-center rounded-full ${color}`}
+            >
+              <div
+                className={`${
+                  color === currentSelectedColor ? "w-8 h-8" : "w-0 h-0"
+                } transition-all bg-zinc-800 rounded-full`}
+              />
+            </button>
+          ))}
+        </div>
+        <div className="py-1 my-2">
+          <p className="bg-neutral">
+            Total Selected Pixel : {count}
+            {/* <br /> Price : {count / 10} Deso{" "} */}
+          </p>
+        </div>
+        <button
+          onClick={() => {
+            document.getElementById("my-modal").checked = true;
+          }}
+          id="submit"
+          className="btn btn-success"
+        >
+          Submit to blockchain
+        </button>
       </div>
       <article class="prose mx-auto">
-        {/* <h1>What is DesoPixelArt in 5 Step?</h1>
-        <p>
-          <span> 1</span>- Paint any pixels you want on any available canvas.
-          <br />
-          <span> 2</span>- The more you paint, the bigger share of the painting
-          you get.
-          <br />
-          <span> 3</span>- After all pixels are set, the canvas is put up for
-          auction. Anyone can make a bid.
-          <br />
-          <span> 4</span>- 96.1% of the winning bid from auction is distributed
-          to the painters.
-          <br />
-          <span> 5</span>- If you painted half of the canvas, you'll get 50% of
-          that.
-        </p> */}
         <h2> Collaborative pixel painting</h2>
         <p>
           DESOPIXELART is the first ever collectible, collaborative pixel

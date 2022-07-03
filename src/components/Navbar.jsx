@@ -39,12 +39,16 @@ const Navbar = () => {
             <ul
               id="navbar"
               tabindex="0"
-              // style={{ background: "#F000B8" }}
               class="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-36 items-center"
             >
-              <li onClick={() => setIsLoggedIn(false)}>
-                <a id="logout">LOGOUT</a>
-              </li>
+              {/* <li onClick={() => setIsLoggedIn(false)}> */}
+              <button
+                className="btn btn-secondary"
+                onClick={() => setIsLoggedIn(false)}
+              >
+                LOGOUT
+              </button>
+              {/* </li> */}
             </ul>
           </div>
         </div>

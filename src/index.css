@@ -11,50 +11,61 @@
 }
 
 body {
-  background-image: url("https://i.imgur.com/fOV9MMg.gif");
+  /* background-image: url("https://i.pinimg.com/originals/22/90/14/22901447181530882ac518226be914e4.gif"); */
+  background-image: url("https://i.pinimg.com/564x/b7/e9/2e/b7e92e2cc8db70da037971c23f1e75c2.jpg");
   background-repeat: round;
   background-size: cover;
 }
 
-h1,h2,h3,h4,h5{
+h1,
+h2,
+h3,
+h4,
+h5 {
   color: white !important;
 }
-p{
+p {
   color: white;
 }
 
-ul,li{
+ul,
+li {
   color: white;
 }
 
-#confirm{
+#confirm {
   @apply bg-success;
   @apply border-green-600;
+  @apply text-neutral;
 }
 
 #confirm:hover {
-  opacity: 0.6;
+  opacity: 0.8;
   @apply bg-success;
   @apply border-green-600;
 }
-
-#login{
-  @apply text-primary-content;
+#cancel {
+  @apply text-neutral;
+}
+#login {
+  @apply text-neutral;
+}
+#submit {
+  @apply text-neutral;
+}
+#login:hover {
+  opacity: 0.8;
 }
 
-#login:hover{
-  opacity: 0.6;
-}
+/* #navbar{
+  @apply bg-neutral;
+} */
 
-#navbar{
-  @apply bg-secondary;
-}
-
-#navbar:hover{
+/* #navbar:hover{
   opacity: 0.7;
-}
+} */
 
-#logout{
+/* #logout{
   font-size: 0.875rem;
   font-weight: 600;
-}
+} */
