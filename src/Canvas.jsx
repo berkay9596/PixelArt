@@ -39,7 +39,7 @@ function Canvas() {
   };
 
   console.log("grid", grid);
-  console.log("modal",document.getElementById("my-modal"))
+  console.log("modal", document.getElementById("my-modal"));
   return (
     <div className={`flex flex-col gap-5 transition-all  text-center my-10`}>
       <input type="checkbox" id="my-modal" class="modal-toggle" />
@@ -60,7 +60,7 @@ function Canvas() {
                 setValue((value) => value + 1);
                 document.getElementById("my-modal").checked = false;
               }}
-              class="btn btn-success"
+              class="btn btn-primary"
             >
               Confirm
             </label>
@@ -175,14 +175,14 @@ function Canvas() {
             </span>
           </li>
           <li class="step step-success">
-            <span className="mx-1" >
+            <span className="mx-1">
               {" "}
               After all pixels are set, the canvas is put up for auction. Anyone
               can make a bid.
             </span>
           </li>
           <li class="step step-success">
-            <span className="mx-4" >
+            <span className="mx-4">
               {" "}
               96.1% of the winning bid from auction is distributed to the
               painters.

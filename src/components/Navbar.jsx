@@ -3,14 +3,17 @@ import React, { useState } from "react";
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
-    <div style={{background:"black"}} class="navbar flex items-center">
+    <div style={{ background: "black" }} class="navbar flex items-center">
       <div class="flex-1">
         {/* <a class="btn btn-ghost normal-case text-xl">DesoPixelArt</a> */}
         <div
           className={`flex flex-col gap-5 transition-all  text-center`}
           // style={{ background: "rebeccap" }}
         >
-          <h1 style={{margin:"0"}} className="font-black font-['Monoton'] text-zinc-500 text-md md:text-5xl tracking-widest mt-5">
+          <h1
+            style={{ margin: "0" }}
+            className="font-black font-['Monoton'] text-zinc-500 text-md md:text-5xl tracking-widest mt-5"
+          >
             <span className="font-['Monoton'] text-rose-500">D</span>
             <span className="font-['Monoton'] text-amber-500">E</span>
             <span className="font-['Monoton'] text-teal-500">S</span>
@@ -35,7 +38,7 @@ const Navbar = () => {
             </label>
             <ul
               tabindex="0"
-              style={{background:"#F000B8"}}
+              style={{ background: "#F000B8" }}
               class="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-52"
             >
               <li onClick={() => setIsLoggedIn(false)}>

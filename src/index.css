@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Monoton&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap");
 
+@tailwind apply;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -24,4 +25,14 @@ p{
 
 ul,li{
   color: white;
+}
+
+.btn-primary {
+  @apply bg-green-600;
+  @apply border-green-600;
+}
+
+.btn-primary:hover{
+  @apply bg-green-700;
+  @apply border-green-700;
 }
