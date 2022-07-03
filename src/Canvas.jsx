@@ -61,6 +61,7 @@ function Canvas() {
                 document.getElementById("my-modal").checked = false;
               }}
               class="btn btn-primary"
+              id="confirm"
             >
               Confirm
             </label>

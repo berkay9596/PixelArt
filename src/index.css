@@ -27,12 +27,21 @@ ul,li{
   color: white;
 }
 
-.btn-primary {
-  @apply bg-green-600;
+#confirm{
+  @apply bg-success;
   @apply border-green-600;
 }
 
-.btn-primary:hover{
-  @apply bg-green-700;
-  @apply border-green-700;
+#confirm:hover {
+  opacity: 0.6;
+  @apply bg-success;
+  @apply border-green-600;
+}
+
+#login{
+  @apply text-primary-content;
+}
+
+#login:hover{
+  opacity: 0.6;
 }

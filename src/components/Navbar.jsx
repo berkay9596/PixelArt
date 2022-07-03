@@ -48,7 +48,11 @@ const Navbar = () => {
           </div>
         </div>
       ) : (
-        <button onClick={() => setIsLoggedIn(true)} className="btn btn-success">
+        <button
+          onClick={() => setIsLoggedIn(true)}
+          className="btn btn-success"
+          id="login"
+        >
           Login
         </button>
       )}
