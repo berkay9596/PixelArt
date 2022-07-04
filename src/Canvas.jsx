@@ -88,8 +88,8 @@ function Canvas() {
                   console.log("coldİndex", rowIndex, colIndex);
                 }}
                 className={`
-                w-4  md:w-5 sm:w-5
-                h-4   md:h-5 sm:h-5 transition-all cursor-pointer ${
+                w-3  md:w-5 sm:w-5
+                h-3   md:h-5 sm:h-5 transition-all cursor-pointer ${
                   col || "bg-purple-200"
                 }`}
               />
