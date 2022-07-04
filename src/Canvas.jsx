@@ -34,10 +34,10 @@ function Canvas() {
     } else {
       newGrid[rowIndex][colIndex] = currentSelectedColor;
     }
-    setRows(newGrid);
+    // setRows(newGrid);
     // localStorage.grid = JSON.stringify(newGrid);
   };
-
+  console.log("SELASAS", { rows: rows });
   const getRowsFromApi = async () => {
     await fetch("https://deso-pixel-art.herokuapp.com/api/v1/get-rows")
       .then((resp) => resp.json())
@@ -51,6 +51,11 @@ function Canvas() {
     await fetch("https://deso-pixel-art.herokuapp.com/api/v1/add-rows", {
       method: "POST",
       body: JSON.stringify({ rows: rows }),
+      // mode: "cors",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
     })
       .then((response) => response.json())
       .then((data) => {
@@ -60,7 +65,6 @@ function Canvas() {
         console.error("Error:", error);
       });
   };
-  console.log("rows", { rows: [rows] });
   return (
     <div className={`flex flex-col gap-5 transition-all  text-center my-10`}>
       <input type="checkbox" id="my-modal" class="modal-toggle" />
