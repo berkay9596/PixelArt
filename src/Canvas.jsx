@@ -1,5 +1,4 @@
-import React, { useContext, useState } from "react";
-import { CanvasContext } from "./App";
+import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import Confetti from "./components/Confetti";
 function Canvas() {
@@ -23,10 +22,10 @@ function Canvas() {
   ];
   const [currentSelectedColor, setCurrentSelectedColor] = useState(colors[0]);
   const [value, setValue] = useState(0);
-  const { grid, setGrid } = useContext(CanvasContext);
   const [count, setCount] = useState(0);
+  const [rows, setRows] = useState([]);
   const fillColor = (rowIndex, colIndex) => {
-    let newGrid = [...grid];
+    let newGrid = [...rows];
     if (
       newGrid[rowIndex][colIndex] === currentSelectedColor ||
       newGrid[rowIndex][colIndex] !== ""
@@ -35,12 +34,33 @@ function Canvas() {
     } else {
       newGrid[rowIndex][colIndex] = currentSelectedColor;
     }
-    setGrid(newGrid);
+    setRows(newGrid);
     // localStorage.grid = JSON.stringify(newGrid);
   };
 
-  console.log("grid", grid);
-  console.log("modal", document.getElementById("my-modal"));
+  const getRowsFromApi = async () => {
+    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/get-rows")
+      .then((resp) => resp.json())
+      .then((data) => setRows(data.rows));
+  };
+  useEffect(() => {
+    getRowsFromApi();
+  }, []);
+
+  const submitPixel = async () => {
+    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/add-rows", {
+      method: "POST",
+      body: JSON.stringify({ rows: rows }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+  console.log("rows", { rows: [rows] });
   return (
     <div className={`flex flex-col gap-5 transition-all  text-center my-10`}>
       <input type="checkbox" id="my-modal" class="modal-toggle" />
@@ -58,6 +78,7 @@ function Canvas() {
           <div class="modal-action">
             <label
               onClick={() => {
+                submitPixel();
                 setValue((value) => value + 1);
                 document.getElementById("my-modal").checked = false;
               }}
@@ -77,7 +98,7 @@ function Canvas() {
         style={{ gap: "1px" }}
         className="flex flex-col items-center xl:items-center md:items-center"
       >
-        {grid.map((row, rowIndex) => (
+        {rows.map((row, rowIndex) => (
           <div style={{ gap: "1px" }} className="flex ">
             {row.map((col, colIndex) => (
               <div
@@ -127,10 +148,7 @@ function Canvas() {
           ))}
         </div>
         <div className="py-1 my-2">
-          <p className="bg-neutral">
-            Total Selected Pixel : {count}
-            {/* <br /> Price : {count / 10} Deso{" "} */}
-          </p>
+          <p className="bg-neutral">Total Selected Pixels : {count}</p>
         </div>
         <button
           onClick={() => {
