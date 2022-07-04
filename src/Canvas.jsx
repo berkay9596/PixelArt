@@ -33,6 +33,7 @@ function Canvas() {
       toast.error("You can't paint over an already painted pixel.");
     } else {
       newGrid[rowIndex][colIndex] = currentSelectedColor;
+      setCount((prev) => prev + 1);
     }
     // setRows(newGrid);
     // localStorage.grid = JSON.stringify(newGrid);
@@ -109,7 +110,6 @@ function Canvas() {
               <div
                 onClick={() => {
                   fillColor(rowIndex, colIndex);
-                  setCount((prev) => prev + 1);
                   // document.getElementById("my-modal").checked = true;
                   console.log("coldİndex", rowIndex, colIndex);
                 }}
