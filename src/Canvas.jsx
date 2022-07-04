@@ -81,6 +81,7 @@ function Canvas() {
                 submitPixel();
                 setValue((value) => value + 1);
                 document.getElementById("my-modal").checked = false;
+                setCount(0);
               }}
               class="btn btn-primary"
               id="confirm"
@@ -152,7 +153,11 @@ function Canvas() {
         </div>
         <button
           onClick={() => {
-            document.getElementById("my-modal").checked = true;
+            if (count > 0) {
+              document.getElementById("my-modal").checked = true;
+            } else {
+              toast.error("You can't buy a pixel without selecting any pixel.");
+            }
           }}
           id="submit"
           className="btn btn-success"
