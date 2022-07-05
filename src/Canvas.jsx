@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import Confetti from "./components/Confetti";
+import eraser from "./images/eraser.svg";
 function Canvas() {
   const colors = [
     "bg-rose-500",
@@ -24,30 +25,53 @@ function Canvas() {
   const [value, setValue] = useState(0);
   const [count, setCount] = useState(0);
   const [rows, setRows] = useState([]);
+  const [rowsCompare, setRowsCompare] = useState([]);
+  const [deleteButtonActive, setDeleteButtonActive] = useState(false);
+  console.log("rowsCompare", rowsCompare);
   const fillColor = (rowIndex, colIndex) => {
-    let newGrid = [...rows];
-    if (
-      newGrid[rowIndex][colIndex] === currentSelectedColor ||
-      newGrid[rowIndex][colIndex] !== ""
-    ) {
-      toast.error("You can't paint over an already painted pixel.");
-    } else {
-      newGrid[rowIndex][colIndex] = currentSelectedColor;
-      setCount((prev) => prev + 1);
+    getRowsFromApi2();
+    if (rowsCompare.length !== 0) {
+      let newGrid = [...rows];
+      if (
+        // newGrid[rowIndex][colIndex] === currentSelectedColor ||
+        rowsCompare[rowIndex][colIndex] !== ""
+      ) {
+        toast.error("This pixel has signed into the system.");
+      } else if (deleteButtonActive && newGrid[rowIndex][colIndex] !== "") {
+        newGrid[rowIndex][colIndex] = "";
+        setCount((prev) => prev - 1);
+      } else if (deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
+        newGrid[rowIndex][colIndex] = "";
+      } else if (!deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
+        newGrid[rowIndex][colIndex] = currentSelectedColor;
+        setCount((prev) => prev + 1);
+      }
+      // setRows(newGrid);
+      // localStorage.grid = JSON.stringify(newGrid);
     }
-    // setRows(newGrid);
-    // localStorage.grid = JSON.stringify(newGrid);
   };
-  console.log("SELASAS", { rows: rows });
+
   const getRowsFromApi = async () => {
-    await fetch("http://139.177.182.25/api/v1/get-rows", {
+    await fetch("/api/v1/get-rows", {
       // mode: "no-cors",
     })
       .then((resp) => resp.json())
-      .then((data) => setRows(data.rows));
+      .then((data) => {
+        setRows(data.rows);
+      });
+  };
+  const getRowsFromApi2 = async () => {
+    await fetch("/api/v1/get-rows", {
+      // mode: "no-cors",
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setRowsCompare(data.rows);
+      });
   };
   useEffect(() => {
     getRowsFromApi();
+    getRowsFromApi2();
   }, []);
 
   const submitPixel = async () => {
@@ -68,6 +92,7 @@ function Canvas() {
         console.error("Error:", error);
       });
   };
+
   return (
     <div className={`flex flex-col gap-5 transition-all  text-center my-10`}>
       <input type="checkbox" id="my-modal" class="modal-toggle" />
@@ -143,7 +168,10 @@ function Canvas() {
         >
           {colors.map((color) => (
             <button
-              onClick={() => setCurrentSelectedColor(color)}
+              onClick={() => {
+                setCurrentSelectedColor(color);
+                setDeleteButtonActive(false);
+              }}
               className={`w-10 h-10 flex items-center justify-center rounded-full ${color}`}
             >
               <div
@@ -153,6 +181,24 @@ function Canvas() {
               />
             </button>
           ))}
+        </div>
+        <div className="py-1 my-2">
+          <button
+            onClick={() => {
+              setDeleteButtonActive(true);
+              setCurrentSelectedColor();
+            }}
+            className="btn btn-error"
+            style={{
+              border: deleteButtonActive ? "4px solid green" : "none",
+              background: deleteButtonActive ? "white" : "",
+            }}
+          >
+            <img src={eraser} className="w-10 mx-2" />
+            <span style={{ color: deleteButtonActive ? "black" : "white" }}>
+              Delete
+            </span>
+          </button>
         </div>
         <div className="py-1 my-2">
           <p className="bg-neutral">Total Selected Pixels : {count}</p>
