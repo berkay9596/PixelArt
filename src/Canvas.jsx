@@ -40,7 +40,9 @@ function Canvas() {
   };
   console.log("SELASAS", { rows: rows });
   const getRowsFromApi = async () => {
-    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/get-rows")
+    await fetch("http://139.177.182.25/api/v1/get-rows", {
+      // mode: "no-cors",
+    })
       .then((resp) => resp.json())
       .then((data) => setRows(data.rows));
   };
@@ -49,10 +51,10 @@ function Canvas() {
   }, []);
 
   const submitPixel = async () => {
-    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/add-rows", {
+    await fetch("http://139.177.182.25/api/v1/add-rows", {
       method: "POST",
       body: JSON.stringify({ rows: rows }),
-      // mode: "cors",
+      // mode: "no-cors",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
