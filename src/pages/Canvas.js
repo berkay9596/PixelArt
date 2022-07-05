@@ -52,7 +52,7 @@ function Canvas() {
   };
 
   const getRowsFromApi = async () => {
-    await fetch("http://139.177.182.25/api/v1/get-rows", {
+    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/get-rows", {
       // mode: "no-cors",
     })
       .then((resp) => resp.json())
