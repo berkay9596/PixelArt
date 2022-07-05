@@ -95,19 +95,19 @@ function Canvas() {
 
   return (
     <div className={`flex flex-col gap-5 transition-all  text-center my-10`}>
-      <input type="checkbox" id="my-modal" class="modal-toggle" />
-      <div class="modal">
+      <input type="checkbox" id="my-modal" className="modal-toggle" />
+      <div className="modal">
         <div
           style={{ background: "black" }}
-          class="modal-box flex items-center flex-col"
+          className="modal-box flex items-center flex-col"
         >
-          <h3 class="font-bold text-lg">
+          <h3 className="font-bold text-lg">
             You are about to own a pixel at Desopixelart
           </h3>
           <p className="py-3">Total Price : {count / 10} Deso</p>
-          <p class="py-3">Do you confirm the transaction?</p>
+          <p className="py-3">Do you confirm the transaction?</p>
 
-          <div class="modal-action">
+          <div className="modal-action">
             <label
               onClick={() => {
                 submitPixel();
@@ -115,12 +115,12 @@ function Canvas() {
                 document.getElementById("my-modal").checked = false;
                 setCount(0);
               }}
-              class="btn btn-primary"
+              className="btn btn-primary"
               id="confirm"
             >
               Confirm
             </label>
-            <label id="cancel" for="my-modal" class="btn btn-secondary ">
+            <label id="cancel" for="my-modal" className="btn btn-secondary ">
               Cancel
             </label>
           </div>
@@ -217,7 +217,7 @@ function Canvas() {
           Submit to system
         </button>
       </div>
-      <article class="prose mx-auto">
+      <article className="prose mx-auto">
         <h2> Collaborative pixel painting</h2>
         <p>
           DESOPIXELART is the first ever collectible, collaborative pixel
@@ -244,26 +244,26 @@ function Canvas() {
           afterwards: 6.1% of sale proceeds will be distributed amongst
           contributors.
         </p>
-        <ul class="steps steps-vertical lg:steps-horizontal mx-2 p-0">
-          <li class="step step-success">
+        <ul className="steps steps-vertical lg:steps-horizontal mx-2 p-0">
+          <li className="step step-success">
             <span className="mx-5">
               Paint any pixels you want on any available canvas.
             </span>
           </li>
-          <li class="step step-success">
+          <li className="step step-success">
             <span className="mx-4">
               {" "}
               The more you paint, the bigger share of the painting you get.
             </span>
           </li>
-          <li class="step step-success">
+          <li className="step step-success">
             <span className="mx-1">
               {" "}
               After all pixels are set, the canvas is put up for auction. Anyone
               can make a bid.
             </span>
           </li>
-          <li class="step step-success">
+          <li className="step step-success">
             <span className="mx-4">
               {" "}
               96.1% of the winning bid from auction is distributed to the

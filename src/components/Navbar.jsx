@@ -6,8 +6,8 @@ const Navbar = () => {
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
 
   return (
-    <div style={{ background: "#3B136B" }} class="navbar flex items-center">
-      <div class="flex-1 h-14">
+    <div style={{ background: "#3B136B" }} className="navbar flex items-center">
+      <div className="flex-1 h-14">
         <div className={`flex flex-col gap-5 transition-all  text-center`}>
           <h1
             style={{ margin: "0" }}
@@ -27,11 +27,11 @@ const Navbar = () => {
         </div>
       </div>
       {isLoggedIn || token ? (
-        <div class="flex-none">
-          <div class="dropdown dropdown-end"></div>
-          <div class="dropdown dropdown-end">
-            <label tabindex="0" class="btn btn-ghost btn-circle avatar">
-              <div class="w-10 rounded-full">
+        <div className="flex-none">
+          <div className="dropdown dropdown-end"></div>
+          <div className="dropdown dropdown-end">
+            <label tabindex="0" className="btn btn-ghost btn-circle avatar">
+              <div className="w-10 rounded-full">
                 <img
                   src={`https://node.deso.org/api/v0/get-single-profile-picture/${token?.publicKey}`}
                 />
@@ -40,7 +40,7 @@ const Navbar = () => {
             <ul
               id="navbar"
               tabindex="0"
-              class="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-36 items-center"
+              className="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-36 items-center"
             >
               <button
                 className="btn btn-secondary"
