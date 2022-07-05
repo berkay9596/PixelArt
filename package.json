@@ -5,6 +5,7 @@
   "dependencies": {
     "@iconify/react": "^3.2.1",
     "animate.css": "^4.1.1",
+    "axios": "^0.27.2",
     "daisyui": "^2.17.0",
     "postcss": "^8.4.12",
     "react": "^18.2.0",
