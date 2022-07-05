@@ -58,8 +58,8 @@ li {
 }
 
 .Toastify__toast-container {
-  margin-top: 3.5rem;
+  margin-top: 4.5rem !important;
 }
-.Toastify__toast-container--top-right {
+/* .Toastify__toast-container--top-right {
   right: 0em !important;
-}
+} */
