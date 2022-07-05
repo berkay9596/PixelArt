@@ -57,15 +57,9 @@ li {
   opacity: 0.8;
 }
 
-/* #navbar{
-  @apply bg-neutral;
-} */
-
-/* #navbar:hover{
-  opacity: 0.7;
-} */
-
-/* #logout{
-  font-size: 0.875rem;
-  font-weight: 600;
-} */
+.Toastify__toast-container {
+  margin-top: 3.5rem;
+}
+.Toastify__toast-container--top-right {
+  right: 0em !important;
+}

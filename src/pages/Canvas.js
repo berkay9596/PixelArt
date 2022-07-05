@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import Confetti from "./components/Confetti";
-import eraser from "./images/eraser.svg";
+import Confetti from "../components/Confetti";
+import eraser from "../images/eraser.svg";
 function Canvas() {
   const colors = [
     "bg-rose-500",
@@ -52,7 +52,7 @@ function Canvas() {
   };
 
   const getRowsFromApi = async () => {
-    await fetch("/api/v1/get-rows", {
+    await fetch("http://139.177.182.25/api/v1/get-rows", {
       // mode: "no-cors",
     })
       .then((resp) => resp.json())
@@ -61,7 +61,7 @@ function Canvas() {
       });
   };
   const getRowsFromApi2 = async () => {
-    await fetch("/api/v1/get-rows", {
+    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/get-rows", {
       // mode: "no-cors",
     })
       .then((resp) => resp.json())
@@ -75,7 +75,7 @@ function Canvas() {
   }, []);
 
   const submitPixel = async () => {
-    await fetch("http://139.177.182.25/api/v1/add-rows", {
+    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/add-rows", {
       method: "POST",
       body: JSON.stringify({ rows: rows }),
       // mode: "no-cors",

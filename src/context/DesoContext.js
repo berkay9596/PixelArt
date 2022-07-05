@@ -7,7 +7,6 @@ const DesoContext = createContext();
 
 export function DesoProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [profilePicture, setProfilePicture] = useState();
   const [desoIdentity, setDesoIdentity] = useState(null);
   const [desoApi, setDesoApi] = useState(null);
   const [publicKey, setPublicKey] = useState(null);
@@ -27,7 +26,8 @@ export function DesoProvider({ children }) {
       toast.success("Login successful");
     }
   };
-  const desoLogout = () => {
+  const desoLogout = async () => {
+    const logout = await desoIdentity.logoutAsync();
     localStorage.removeItem("identityUsersV2");
     setIsLoggedIn(false);
   };
@@ -47,8 +47,7 @@ export function DesoProvider({ children }) {
         desoLogin,
         desoLogout,
         sendDeso,
-        profilePicture,
-        publicKey
+        publicKey,
       }}
     >
       {children}
