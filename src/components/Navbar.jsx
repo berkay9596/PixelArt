@@ -1,15 +1,14 @@
-import React, { useState } from "react";
+import React, { useContext } from "react";
+import DesoContext from "../context/DesoContext";
 
 const Navbar = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { isLoggedIn, desoLogin, desoLogout } = useContext(DesoContext);
+  const token = JSON.parse(localStorage.getItem("identityUsersV2"));
+
   return (
     <div style={{ background: "#3B136B" }} class="navbar flex items-center">
       <div class="flex-1 h-14">
-        {/* <a class="btn btn-ghost normal-case text-xl">DesoPixelArt</a> */}
-        <div
-          className={`flex flex-col gap-5 transition-all  text-center`}
-          // style={{ background: "rebeccap" }}
-        >
+        <div className={`flex flex-col gap-5 transition-all  text-center`}>
           <h1
             style={{ margin: "0" }}
             className="font-black font-['Monoton'] text-zinc-500 text-md md:text-5xl tracking-widest mt-5"
@@ -27,13 +26,15 @@ const Navbar = () => {
           </h1>
         </div>
       </div>
-      {isLoggedIn ? (
+      {isLoggedIn || token ? (
         <div class="flex-none">
           <div class="dropdown dropdown-end"></div>
           <div class="dropdown dropdown-end">
             <label tabindex="0" class="btn btn-ghost btn-circle avatar">
               <div class="w-10 rounded-full">
-                <img src="https://placeimg.com/80/80/people" />
+                <img
+                  src={`https://node.deso.org/api/v0/get-single-profile-picture/${token?.publicKey}`}
+                />
               </div>
             </label>
             <ul
@@ -41,20 +42,18 @@ const Navbar = () => {
               tabindex="0"
               class="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-36 items-center"
             >
-              {/* <li onClick={() => setIsLoggedIn(false)}> */}
               <button
                 className="btn btn-secondary"
-                onClick={() => setIsLoggedIn(false)}
+                onClick={() => desoLogout()}
               >
                 LOGOUT
               </button>
-              {/* </li> */}
             </ul>
           </div>
         </div>
       ) : (
         <button
-          onClick={() => setIsLoggedIn(true)}
+          onClick={() => desoLogin()}
           className="btn btn-success"
           id="login"
         >
