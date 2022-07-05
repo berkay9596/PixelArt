@@ -208,13 +208,13 @@ function Canvas() {
             if (count > 0) {
               document.getElementById("my-modal").checked = true;
             } else {
-              toast.error("You can't buy a pixel without selecting any pixel.");
+              toast.error("You can't submit without selecting any pixel.");
             }
           }}
           id="submit"
           className="btn btn-success"
         >
-          Submit to blockchain
+          Submit to system
         </button>
       </div>
       <article class="prose mx-auto">

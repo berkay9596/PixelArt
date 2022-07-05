@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   return (
-    <div style={{ background: "black" }} class="navbar flex items-center">
+    <div style={{ background: "#3B136B" }} class="navbar flex items-center">
       <div class="flex-1 h-14">
         {/* <a class="btn btn-ghost normal-case text-xl">DesoPixelArt</a> */}
         <div
