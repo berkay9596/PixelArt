@@ -19,7 +19,7 @@ function App() {
     <>
       <Navbar />
       <article className="prose mx-auto">
-        <h1 className="text-center my-8">JOIN WITH A PIXEL</h1>
+        <h1 className="text-center">JOIN WITH A PIXEL</h1>
       </article>
       <div className="container mx-auto">
         <Canvas />
