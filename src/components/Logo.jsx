@@ -2,7 +2,7 @@ const Logo = () => {
   return (
     <h1
       style={{ margin: "0" }}
-      className="font-black font-['Monoton'] text-zinc-500 text-md md:text-5xl tracking-widest mt-5"
+      className="font-black font-['Monoton'] text-zinc-500 text-md md:text-4xl tracking-widest mt-5"
     >
       <span className="font-['Monoton'] text-rose-500">D</span>
       <span className="font-['Monoton'] text-amber-500">E</span>
