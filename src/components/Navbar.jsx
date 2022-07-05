@@ -6,7 +6,7 @@ const Navbar = () => {
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
 
   return (
-    <div style={{ background: "#3B136B" }} className="navbar flex items-center fixed top-0">
+    <div style={{ background: "#3B136B" }} className="navbar flex items-center fixed top-0 z-50	">
       <div className="flex-1 h-14">
         <div className={`flex flex-col gap-5 transition-all  text-center`}>
          <Logo/>
