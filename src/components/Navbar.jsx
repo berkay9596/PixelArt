@@ -1,15 +1,16 @@
 import React, { useContext } from "react";
 import DesoContext from "../context/DesoContext";
-import Logo from './Logo'
+import Logo from "./Logo";
 const Navbar = () => {
   const { isLoggedIn, desoLogin, desoLogout } = useContext(DesoContext);
-  const token = JSON.parse(localStorage.getItem("identityUsersV2"));
+  const token =
+    isLoggedIn && JSON.parse(localStorage.getItem("identityUsersV2"));
 
   return (
-    <div style={{ background: "#3B136B" }} className="navbar flex items-center fixed top-0 z-50	">
+    <div className="navbar flex items-center fixed top-0 z-50 bg-violet-900	">
       <div className="flex-1 h-14">
         <div className={`flex flex-col gap-5 transition-all  text-center`}>
-         <Logo/>
+          <Logo />
         </div>
       </div>
       {isLoggedIn || token ? (
@@ -20,6 +21,7 @@ const Navbar = () => {
               <div className="w-10 rounded-full">
                 <img
                   src={`https://node.deso.org/api/v0/get-single-profile-picture/${token?.publicKey}`}
+                  alt="profile"
                 />
               </div>
             </label>

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import Confetti from "../components/Confetti";
+import Confetti from "./Confetti";
 import eraser from "../images/eraser.svg";
+import BackdropWithSpinner from "./BackdropWithSpinner";
+
 function Canvas() {
   const colors = [
     "bg-rose-500",
@@ -27,15 +29,13 @@ function Canvas() {
   const [rows, setRows] = useState([]);
   const [rowsCompare, setRowsCompare] = useState([]);
   const [deleteButtonActive, setDeleteButtonActive] = useState(false);
-  console.log("rowsCompare", rowsCompare);
+  const [loading, setLoading] = useState(false);
+
   const fillColor = (rowIndex, colIndex) => {
-    getRowsFromApi2();
+    getRowsFromApiToComparison();
     if (rowsCompare.length !== 0) {
       let newGrid = [...rows];
-      if (
-        // newGrid[rowIndex][colIndex] === currentSelectedColor ||
-        rowsCompare[rowIndex][colIndex] !== ""
-      ) {
+      if (rowsCompare[rowIndex][colIndex] !== "") {
         toast.error("This pixel has signed into the system.");
       } else if (deleteButtonActive && newGrid[rowIndex][colIndex] !== "") {
         newGrid[rowIndex][colIndex] = "";
@@ -46,39 +46,27 @@ function Canvas() {
         newGrid[rowIndex][colIndex] = currentSelectedColor;
         setCount((prev) => prev + 1);
       }
-      // setRows(newGrid);
-      // localStorage.grid = JSON.stringify(newGrid);
     }
   };
 
   const getRowsFromApi = async () => {
-    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/get-rows", {
-      // mode: "no-cors",
-    })
+    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/get-rows", {})
       .then((resp) => resp.json())
       .then((data) => {
         setRows(data.rows);
       });
   };
-  const getRowsFromApi2 = async () => {
-    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/get-rows", {
-      // mode: "no-cors",
-    })
+  const getRowsFromApiToComparison = async () => {
+    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/get-rows", {})
       .then((resp) => resp.json())
       .then((data) => {
         setRowsCompare(data.rows);
       });
   };
-  useEffect(() => {
-    getRowsFromApi();
-    getRowsFromApi2();
-  }, []);
-
   const submitPixel = async () => {
     await fetch("https://deso-pixel-art.herokuapp.com/api/v1/add-rows", {
       method: "POST",
       body: JSON.stringify({ rows: rows }),
-      // mode: "no-cors",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
@@ -92,56 +80,65 @@ function Canvas() {
         console.error("Error:", error);
       });
   };
+  useEffect(() => {
+    getRowsFromApi();
+    getRowsFromApiToComparison();
+  }, []);
 
   return (
-    <div className={`flex flex-col gap-5 transition-all  text-center my-10`}>
+    <div className="flex flex-col gap-5 transition-all  text-center my-10">
       <input type="checkbox" id="my-modal" className="modal-toggle" />
-      <div className="modal">
-        <div
-          style={{ background: "black" }}
-          className="modal-box flex items-center flex-col"
-        >
-          <h3 className="font-bold text-lg">
-            You are about to own a pixel at Desopixelart
-          </h3>
-          <p className="py-3">Total Price : {count / 10} Deso</p>
-          <p className="py-3">Do you confirm the transaction?</p>
 
-          <div className="modal-action">
-            <label
-              onClick={() => {
-                submitPixel();
-                setValue((value) => value + 1);
-                document.getElementById("my-modal").checked = false;
-                setCount(0);
-              }}
-              className="btn btn-primary"
-              id="confirm"
-            >
-              Confirm
-            </label>
-            <label id="cancel" for="my-modal" className="btn btn-secondary ">
-              Cancel
-            </label>
+      {!loading && (
+        <div className="modal">
+          <div className="modal-box flex items-center flex-col bg-black">
+            <h3 className="font-bold text-lg">
+              You are about to own a pixel at Desopixelart
+            </h3>
+            <p className="py-3">Total Price : {count / 10} Deso</p>
+            <p className="py-3">Do you confirm the transaction?</p>
+            <div className="modal-action">
+              <label
+                onClick={async () => {
+                  setLoading(true);
+                  await submitPixel();
+                  setLoading(false);
+                  getRowsFromApiToComparison();
+                  setValue((value) => value + 1);
+                  document.getElementById("my-modal").checked = false;
+                  setCount(0);
+                  toast.success("Selected pixels added to the system.")
+                }}
+                className="btn btn-primary"
+                id="confirm"
+              >
+                Confirm
+              </label>
+              <label id="cancel" for="my-modal" className="btn btn-secondary ">
+                Cancel
+              </label>
+            </div>
           </div>
         </div>
-      </div>
+      )}
+
       <Confetti value={value} />
+      {loading && <BackdropWithSpinner />}
       <div
         style={{ gap: "1px" }}
         className="flex flex-col items-center xl:items-center md:items-center"
       >
         {rows.map((row, rowIndex) => (
-          <div style={{ gap: "1px" }} className="flex ">
+          <div style={{ gap: "1px" }} className="flex" key={rowIndex}>
             {row.map((col, colIndex) => (
               <div
+                key={colIndex}
                 onClick={() => {
                   fillColor(rowIndex, colIndex);
-                  // document.getElementById("my-modal").checked = true;
                   console.log("coldİndex", rowIndex, colIndex);
                 }}
                 className={`
-                w-3  md:w-5 sm:w-5
+                w-3  md:w-5 sm:w-5 
                 h-3   md:h-5 sm:h-5 transition-all cursor-pointer ${
                   col || "bg-purple-200"
                 }`}
@@ -150,24 +147,11 @@ function Canvas() {
           </div>
         ))}
       </div>
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          flexWrap: "wrap",
-          flexDirection: "column",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-          className="gap-1 flex-wrap"
-        >
-          {colors.map((color) => (
+      <div className="flex items-center justify-center flex-col flex-wrap">
+        <div className="flex justify-center gap-1 flex-wrap">
+          {colors.map((color, index) => (
             <button
+              key={index}
               onClick={() => {
                 setCurrentSelectedColor(color);
                 setDeleteButtonActive(false);
@@ -194,7 +178,7 @@ function Canvas() {
               background: deleteButtonActive ? "white" : "",
             }}
           >
-            <img src={eraser} className="w-10 mx-2" />
+            <img src={eraser} className="w-10 mx-2" alt="delete button" />
             <span style={{ color: deleteButtonActive ? "black" : "white" }}>
               Delete
             </span>
@@ -221,14 +205,13 @@ function Canvas() {
         <h2> Collaborative pixel painting</h2>
         <p>
           DESOPIXELART is the first ever collectible, collaborative pixel
-          artwork to-be-created by the Deso community. Each canvas is 20x20
+          artwork to-be-created by the Deso community. Each canvas is 25x25
           pixels in size and has multiple authors, who create a unique piece of
           art by collaborating together. The completed artwork will be put up
           for auction and when sold, auction proceeds will be distributed among
           all contributors evenly, depending on how many pixels they contributed
           to the canvas.
         </p>
-
         <h3>Earn by contributing</h3>
         <p>
           By contributing to the artwork you are not only digitally signing your

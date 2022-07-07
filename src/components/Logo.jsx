@@ -1,9 +1,6 @@
 const Logo = () => {
   return (
-    <h1
-      style={{ margin: "0" }}
-      className="font-black font-['Monoton'] text-zinc-500 text-sm md:text-4xl tracking-widest mt-5"
-    >
+    <h1 className="font-black font-['Monoton'] text-zinc-500 text-sm md:text-4xl tracking-widest m-0">
       <span className="font-['Monoton'] text-rose-500">D</span>
       <span className="font-['Monoton'] text-amber-500">E</span>
       <span className="font-['Monoton'] text-teal-500">S</span>

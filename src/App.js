@@ -1,4 +1,4 @@
-import Canvas from "./pages/Canvas";
+import Canvas from "./components/Canvas";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/Footer";
@@ -19,7 +19,7 @@ function App() {
     <>
       <Navbar />
       <article className="prose mx-auto">
-        <h1 className="text-center">JOIN WITH A PIXEL</h1>
+        <h1 className="text-center relative top-4	">JOIN WITH A PIXEL</h1>
       </article>
       <div className="container mx-auto">
         <Canvas />

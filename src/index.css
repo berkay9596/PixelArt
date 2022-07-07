@@ -11,8 +11,7 @@
 }
 
 body {
-  /* background-image: url("https://i.pinimg.com/originals/22/90/14/22901447181530882ac518226be914e4.gif"); */
-  background-image: url("https://i.pinimg.com/564x/b7/e9/2e/b7e92e2cc8db70da037971c23f1e75c2.jpg");
+  background-image: url("./images/background.jpg");
   background-repeat: round;
   background-size: cover;
 }
@@ -24,6 +23,7 @@ h4,
 h5 {
   color: white !important;
 }
+
 p {
   color: white;
 }
@@ -44,15 +44,19 @@ li {
   @apply bg-success;
   @apply border-green-600;
 }
+
 #cancel {
   @apply text-neutral;
 }
+
 #login {
   @apply text-neutral;
 }
+
 #submit {
   @apply text-neutral;
 }
+
 #login:hover {
   opacity: 0.8;
 }
@@ -60,6 +64,7 @@ li {
 .Toastify__toast-container {
   margin-top: 4.5rem !important;
 }
+
 /* .Toastify__toast-container--top-right {
   right: 0em !important;
 } */

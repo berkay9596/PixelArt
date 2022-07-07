@@ -27,9 +27,9 @@ export function DesoProvider({ children }) {
     }
   };
   const desoLogout = async () => {
-    const logout = await desoIdentity.logoutAsync();
     localStorage.removeItem("identityUsersV2");
     setIsLoggedIn(false);
+    window.location.reload();
   };
   const sendDeso = async () => {
     let createSend = await desoApi?.sendDeso(1);
