@@ -25,6 +25,7 @@ function App() {
         <Canvas />
       </div>
       <Footer />
+
       <ToastContainer />
     </>
   );

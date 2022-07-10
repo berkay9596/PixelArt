@@ -3,6 +3,11 @@ import { toast } from "react-toastify";
 import Confetti from "./Confetti";
 import eraser from "../images/eraser.svg";
 import BackdropWithSpinner from "./BackdropWithSpinner";
+import io from "socket.io-client";
+import { useContext } from "react";
+import DesoContext from "../context/DesoContext";
+let endPoint = "http://localhost:5000";
+let socket = io.connect(`${endPoint}`);
 
 function Canvas() {
   const colors = [
@@ -26,11 +31,16 @@ function Canvas() {
   const [currentSelectedColor, setCurrentSelectedColor] = useState(colors[0]);
   const [value, setValue] = useState(0);
   const [count, setCount] = useState(0);
+
   const [rows, setRows] = useState([]);
   const [rowsCompare, setRowsCompare] = useState([]);
+
   const [deleteButtonActive, setDeleteButtonActive] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [socketChange, setSocketChange] = useState(0);
+  const [isSubmitted, setIsSubmitted] = useState(0);
+  const token = JSON.parse(localStorage.getItem("identityUsersV2"));
+  const { sendDeso, publicKey } = useContext(DesoContext);
   const fillColor = (rowIndex, colIndex) => {
     getRowsFromApiToComparison();
     if (rowsCompare.length !== 0) {
@@ -50,26 +60,29 @@ function Canvas() {
   };
 
   const getRowsFromApi = async () => {
-    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/get-rows", {})
+    await fetch("/api/v1/get-rows", {})
       .then((resp) => resp.json())
       .then((data) => {
         setRows(data.rows);
       });
   };
+  const JWT_Token = "Kaan";
   const getRowsFromApiToComparison = async () => {
-    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/get-rows", {})
+    await fetch("/api/v1/get-rows", {})
       .then((resp) => resp.json())
       .then((data) => {
         setRowsCompare(data.rows);
       });
   };
+
   const submitPixel = async () => {
-    await fetch("https://deso-pixel-art.herokuapp.com/api/v1/add-rows", {
+    await fetch("/api/v1/add-rows", {
       method: "POST",
       body: JSON.stringify({ rows: rows }),
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
+        Authorization: `Bearer ${JWT_Token}`,
       },
     })
       .then((response) => response.json())
@@ -79,183 +92,237 @@ function Canvas() {
       .catch((error) => {
         console.error("Error:", error);
       });
+    setIsSubmitted(1);
+    setSocketChange(1);
+    setTimeout(() => {
+      setIsSubmitted(0);
+    }, 1000);
   };
+
   useEffect(() => {
     getRowsFromApi();
     getRowsFromApiToComparison();
   }, []);
 
-  return (
-    <div className="flex flex-col gap-5 transition-all  text-center my-10">
-      <input type="checkbox" id="my-modal" className="modal-toggle" />
+  useEffect(() => {
+    socket.on("message", () => {
+      setCount(0);
+      getRowsFromApi();
+      setSocketChange((prev) => prev + 1);
+    });
+  }, [socketChange]);
 
-      {!loading && (
-        <div className="modal">
-          <div className="modal-box flex items-center flex-col bg-black">
-            <h3 className="font-bold text-lg">
-              You are about to own a pixel at Desopixelart
-            </h3>
-            <p className="py-3">Total Price : {count / 10} Deso</p>
-            <p className="py-3">Do you confirm the transaction?</p>
-            <div className="modal-action">
-              <label
-                onClick={async () => {
-                  setLoading(true);
-                  await submitPixel();
-                  setLoading(false);
-                  getRowsFromApiToComparison();
-                  setValue((value) => value + 1);
-                  document.getElementById("my-modal").checked = false;
-                  setCount(0);
-                  toast.success("Selected pixels added to the system.")
-                }}
-                className="btn btn-primary"
-                id="confirm"
-              >
-                Confirm
-              </label>
-              <label id="cancel" for="my-modal" className="btn btn-secondary ">
-                Cancel
-              </label>
+  const confirmTransaction = async () => {
+    const token = JSON.parse(localStorage.getItem("identityUsersV2")).publicKey;
+    sendDeso(token, count);
+    setLoading(true);
+    await submitPixel();
+    socket.emit("message", rows);
+    getRowsFromApiToComparison();
+    setValue((value) => value + 1);
+    document.getElementById("my-modal").checked = false;
+    setCount(0);
+    setLoading(false);
+    toast.success("Selected pixels added to the system.");
+  };
+
+  useEffect(() => {
+    if (isSubmitted === 0 && socketChange >= 1) {
+      toast.warn(
+        `Someone has updated the canvas. You may need to fill your pixels again!!!`
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socketChange]);
+  return (
+    <>
+      <iframe
+        title="desoidentity"
+        id="identity"
+        frameBorder="0"
+        src="https://identity.deso.org/embed?v=2"
+        style={{
+          height: "100vh",
+          width: "100vw",
+          display: "none",
+          position: "fixed",
+          zIndex: 1000,
+          left: 0,
+          top: 0,
+        }}
+      ></iframe>
+
+      <div className="flex flex-col gap-5 transition-all  text-center my-10">
+        <input type="checkbox" id="my-modal" className="modal-toggle" />
+
+        {!loading && (
+          <div className="modal">
+            <div className="modal-box flex items-center flex-col bg-black">
+              <h3 className="font-bold text-lg">
+                You are about to own a pixel at Desopixelart
+              </h3>
+              <p className="py-3">Total Price : {count / 10} Deso</p>
+              <p className="py-3">Do you confirm the transaction?</p>
+              <div className="modal-action">
+                <label
+                  onClick={confirmTransaction}
+                  className="btn btn-primary"
+                  id="confirm"
+                >
+                  Confirm
+                </label>
+                <label
+                  id="cancel"
+                  for="my-modal"
+                  className="btn btn-secondary "
+                >
+                  Cancel
+                </label>
+              </div>
             </div>
           </div>
-        </div>
-      )}
+        )}
 
-      <Confetti value={value} />
-      {loading && <BackdropWithSpinner />}
-      <div
-        style={{ gap: "1px" }}
-        className="flex flex-col items-center xl:items-center md:items-center"
-      >
-        {rows.map((row, rowIndex) => (
-          <div style={{ gap: "1px" }} className="flex" key={rowIndex}>
-            {row.map((col, colIndex) => (
-              <div
-                key={colIndex}
-                onClick={() => {
-                  fillColor(rowIndex, colIndex);
-                  console.log("coldİndex", rowIndex, colIndex);
-                }}
-                className={`
+        <Confetti value={value} />
+        {loading && <BackdropWithSpinner />}
+        <div
+          style={{ gap: "1px" }}
+          className="flex flex-col items-center xl:items-center md:items-center"
+        >
+          {rows.map((row, rowIndex) => (
+            <div style={{ gap: "1px" }} className="flex" key={rowIndex}>
+              {row.map((col, colIndex) => (
+                <div
+                  key={colIndex}
+                  onClick={() => {
+                    fillColor(rowIndex, colIndex);
+                  }}
+                  className={`
                 w-3  md:w-5 sm:w-5 
                 h-3   md:h-5 sm:h-5 transition-all cursor-pointer ${
                   col || "bg-purple-200"
                 }`}
-              />
-            ))}
-          </div>
-        ))}
-      </div>
-      <div className="flex items-center justify-center flex-col flex-wrap">
-        <div className="flex justify-center gap-1 flex-wrap">
-          {colors.map((color, index) => (
-            <button
-              key={index}
-              onClick={() => {
-                setCurrentSelectedColor(color);
-                setDeleteButtonActive(false);
-              }}
-              className={`w-10 h-10 flex items-center justify-center rounded-full ${color}`}
-            >
-              <div
-                className={`${
-                  color === currentSelectedColor ? "w-8 h-8" : "w-0 h-0"
-                } transition-all bg-zinc-800 rounded-full`}
-              />
-            </button>
+                />
+              ))}
+            </div>
           ))}
         </div>
-        <div className="py-1 my-2">
+        <div className="flex items-center justify-center flex-col flex-wrap">
+          <div className="flex justify-center gap-1 flex-wrap">
+            {colors.map((color, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  setCurrentSelectedColor(color);
+                  setDeleteButtonActive(false);
+                }}
+                className={`w-10 h-10 flex items-center justify-center rounded-full ${color}`}
+              >
+                <div
+                  className={`${
+                    color === currentSelectedColor ? "w-8 h-8" : "w-0 h-0"
+                  } transition-all bg-zinc-800 rounded-full`}
+                />
+              </button>
+            ))}
+          </div>
+          <div className="py-1 my-2">
+            <button
+              onClick={() => {
+                setDeleteButtonActive(true);
+                setCurrentSelectedColor();
+              }}
+              className="btn btn-error"
+              style={{
+                border: deleteButtonActive ? "4px solid green" : "none",
+                background: deleteButtonActive ? "white" : "",
+              }}
+            >
+              <img src={eraser} className="w-10 mx-2" alt="delete button" />
+              <span style={{ color: deleteButtonActive ? "black" : "white" }}>
+                Delete
+              </span>
+            </button>
+          </div>
+          <div className="py-1 my-2">
+            <p style={{ background: "deeppink" }} className="p-1 rounded-lg">
+              Total Selected Pixels : {count}
+            </p>
+          </div>
           <button
             onClick={() => {
-              setDeleteButtonActive(true);
-              setCurrentSelectedColor();
+              if (token) {
+                if (count > 0) {
+                  document.getElementById("my-modal").checked = true;
+                } else {
+                  toast.error("You can't submit without selecting any pixel.");
+                }
+              } else {
+                toast.error("You need to login first.");
+              }
             }}
-            className="btn btn-error"
-            style={{
-              border: deleteButtonActive ? "4px solid green" : "none",
-              background: deleteButtonActive ? "white" : "",
-            }}
+            id="submit"
+            className="btn btn-success"
           >
-            <img src={eraser} className="w-10 mx-2" alt="delete button" />
-            <span style={{ color: deleteButtonActive ? "black" : "white" }}>
-              Delete
-            </span>
+            Submit to system
           </button>
         </div>
-        <div className="py-1 my-2">
-          <p className="bg-neutral">Total Selected Pixels : {count}</p>
-        </div>
-        <button
-          onClick={() => {
-            if (count > 0) {
-              document.getElementById("my-modal").checked = true;
-            } else {
-              toast.error("You can't submit without selecting any pixel.");
-            }
-          }}
-          id="submit"
-          className="btn btn-success"
-        >
-          Submit to system
-        </button>
-      </div>
-      <article className="prose mx-auto">
-        <h2> Collaborative pixel painting</h2>
-        <p>
-          DESOPIXELART is the first ever collectible, collaborative pixel
-          artwork to-be-created by the Deso community. Each canvas is 25x25
-          pixels in size and has multiple authors, who create a unique piece of
-          art by collaborating together. The completed artwork will be put up
-          for auction and when sold, auction proceeds will be distributed among
-          all contributors evenly, depending on how many pixels they contributed
-          to the canvas.
-        </p>
-        <h3>Earn by contributing</h3>
-        <p>
-          By contributing to the artwork you are not only digitally signing your
-          address to each and every pixel you paint onto the blockchain for
-          eternity - you are also entitled to a percentage of the proceeds from
-          the auction of the final piece as well as a portion of every sale
-          afterwards.
-        </p>
+        <article className="prose mx-auto">
+          <h2> Collaborative pixel painting</h2>
+          <p>
+            DESOPIXELART is the first ever collectible, collaborative pixel
+            artwork to-be-created by the Deso community. Each canvas is 25x25
+            pixels in size and has multiple authors, who create a unique piece
+            of art by collaborating together. The completed artwork will be put
+            up for auction and when sold, auction proceeds will be distributed
+            among all contributors evenly, depending on how many pixels they
+            contributed to the canvas.
+          </p>
+          <h3>Earn by contributing</h3>
+          <p>
+            By contributing to the artwork you are not only digitally signing
+            your address to each and every pixel you paint onto the blockchain
+            for eternity - you are also entitled to a percentage of the proceeds
+            from the auction of the final piece as well as a portion of every
+            sale afterwards.
+          </p>
 
-        <p>
-          When the completed canvas is auctioned: 96.1% of auction proceeds will
-          be distributed amongst contributors. Every sale of the canvas
-          afterwards: 6.1% of sale proceeds will be distributed amongst
-          contributors.
-        </p>
-        <ul className="steps steps-vertical lg:steps-horizontal mx-2 p-0">
-          <li className="step step-success">
-            <span className="mx-5">
-              Paint any pixels you want on any available canvas.
-            </span>
-          </li>
-          <li className="step step-success">
-            <span className="mx-4">
-              {" "}
-              The more you paint, the bigger share of the painting you get.
-            </span>
-          </li>
-          <li className="step step-success">
-            <span className="mx-1">
-              {" "}
-              After all pixels are set, the canvas is put up for auction. Anyone
-              can make a bid.
-            </span>
-          </li>
-          <li className="step step-success">
-            <span className="mx-4">
-              {" "}
-              96.1% of the winning bid from auction is distributed to the
-              painters.
-            </span>
-          </li>
-        </ul>
-      </article>
-    </div>
+          <p>
+            When the completed canvas is auctioned: 96.1% of auction proceeds
+            will be distributed amongst contributors. Every sale of the canvas
+            afterwards: 6.1% of sale proceeds will be distributed amongst
+            contributors.
+          </p>
+          <ul className="steps steps-vertical lg:steps-horizontal mx-2 p-0">
+            <li className="step step-success">
+              <span className="mx-5">
+                Paint any pixels you want on any available canvas.
+              </span>
+            </li>
+            <li className="step step-success">
+              <span className="mx-4">
+                {" "}
+                The more you paint, the bigger share of the painting you get.
+              </span>
+            </li>
+            <li className="step step-success">
+              <span className="mx-1">
+                {" "}
+                After all pixels are set, the canvas is put up for auction.
+                Anyone can make a bid.
+              </span>
+            </li>
+            <li className="step step-success">
+              <span className="mx-4">
+                {" "}
+                96.1% of the winning bid from auction is distributed to the
+                painters.
+              </span>
+            </li>
+          </ul>
+        </article>
+      </div>
+    </>
   );
 }
 

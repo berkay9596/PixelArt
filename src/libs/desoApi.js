@@ -7,11 +7,11 @@ class DesoApi {
     this.client = null;
     this.baseUrl = DEFAULT_NODE_URL;
   }
-  async sendDeso(publicKey) {
+  async sendDeso(publicKey, amount) {
     const path = "/v0/send-deso";
     const data = {
       MinFeeRateNanosPerKB: 1000,
-      AmountNanos: 100000,
+      AmountNanos: amount,
       SenderPublicKeyBase58Check: publicKey,
       RecipientPublicKeyOrUsername:
         "BC1YLiVd3t2XfDutMgVFPeShG3RiPGGrSa1qJ5b5f23sHyFAd2nrqU2",

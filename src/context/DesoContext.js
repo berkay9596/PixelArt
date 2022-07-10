@@ -20,25 +20,24 @@ export function DesoProvider({ children }) {
 
   const desoLogin = async () => {
     const user = await desoIdentity.loginAsync(4);
-    if (user) {
-      setIsLoggedIn(true);
-      setPublicKey(user.publicKey);
-      toast.success("Login successful");
-    }
+    setIsLoggedIn(true);
+    console.log("user", user);
+    setPublicKey(user.publicKey);
+    toast.success("Login successful");
   };
   const desoLogout = async () => {
     localStorage.removeItem("identityUsersV2");
     setIsLoggedIn(false);
     window.location.reload();
   };
-  const sendDeso = async () => {
-    let createSend = await desoApi?.sendDeso(1);
+  const sendDeso = async (publicKey, amount) => {
+    let createSend = await desoApi?.sendDeso(publicKey, 1000000 * amount);
     let transactionHex = await createSend?.TransactionHex;
     let signedTransactionHex = await desoIdentity?.signTxAsync(transactionHex);
     let rtnSend = await desoApi?.submitTransaction(signedTransactionHex);
-    if (rtnSend) console.log("Send deso successful");
+    console.log("rtnsend", rtnSend);
   };
-
+  console.log("publicKey1", publicKey);
   return (
     <DesoContext.Provider
       value={{

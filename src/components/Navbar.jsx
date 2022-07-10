@@ -3,11 +3,9 @@ import DesoContext from "../context/DesoContext";
 import Logo from "./Logo";
 const Navbar = () => {
   const { isLoggedIn, desoLogin, desoLogout } = useContext(DesoContext);
-  const token =
-    isLoggedIn && JSON.parse(localStorage.getItem("identityUsersV2"));
-
+  const token = JSON.parse(localStorage.getItem("identityUsersV2"));
   return (
-    <div className="navbar flex items-center fixed top-0 z-50 bg-violet-900	">
+    <div className="navbar flex items-center">
       <div className="flex-1 h-14">
         <div className={`flex flex-col gap-5 transition-all  text-center`}>
           <Logo />

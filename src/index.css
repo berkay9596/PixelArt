@@ -6,14 +6,20 @@
 @tailwind components;
 @tailwind utilities;
 
+:root,
+[data-theme] {
+  background: none;
+}
+
 * {
   font-family: "Inter", sans-serif;
 }
 
 body {
-  background-image: url("./images/background.jpg");
-  background-repeat: round;
+  background-image: url("./images/bg.webp");
+  /* background-repeat: round; */
   background-size: cover;
+  /* background-color: black; */
 }
 
 h1,
