@@ -40,7 +40,7 @@ function Canvas() {
   const [socketChange, setSocketChange] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(0);
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
-  const { sendDeso, publicKey } = useContext(DesoContext);
+  const { sendDeso } = useContext(DesoContext);
   const fillColor = (rowIndex, colIndex) => {
     getRowsFromApiToComparison();
     if (rowsCompare.length !== 0) {

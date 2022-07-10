@@ -35,9 +35,7 @@ export function DesoProvider({ children }) {
     let transactionHex = await createSend?.TransactionHex;
     let signedTransactionHex = await desoIdentity?.signTxAsync(transactionHex);
     let rtnSend = await desoApi?.submitTransaction(signedTransactionHex);
-    console.log("rtnsend", rtnSend);
   };
-  console.log("publicKey1", publicKey);
   return (
     <DesoContext.Provider
       value={{
