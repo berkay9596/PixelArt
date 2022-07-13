@@ -24,7 +24,19 @@ class DesoApi {
       return null;
     }
   }
-
+  async getSingleProfile(publicKey) {
+    const path = "/v0/get-single-profile";
+    const data = {
+      PublicKeysBase58Check: publicKey,
+    };
+    try {
+      const result = await this.getClient().post(path, data);
+      return result.data;
+    } catch (error) {
+      console.log(error);
+      return null;
+    }
+  }
   async submitTransaction(signedTransactionHex) {
     if (!signedTransactionHex) {
       console.log("signedTransactionHex is required");

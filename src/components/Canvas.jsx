@@ -3,11 +3,14 @@ import { toast } from "react-toastify";
 import Confetti from "./Confetti";
 import eraser from "../images/eraser.svg";
 import BackdropWithSpinner from "./BackdropWithSpinner";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import { useContext } from "react";
 import DesoContext from "../context/DesoContext";
-let endPoint = "http://localhost:5000";
-let socket = io.connect(`${endPoint}`);
+import rows from "../rows.json";
+import { Tooltip } from "@mui/material";
+import LeaderBoard from "./LeaderBoard";
+// let endPoint = "http://localhost:5000";
+// let socket = io.connect(`${endPoint}`);
 
 function Canvas() {
   const colors = [
@@ -32,7 +35,7 @@ function Canvas() {
   const [value, setValue] = useState(0);
   const [count, setCount] = useState(0);
 
-  const [rows, setRows] = useState([]);
+  // const [rows, setRows] = useState([]);
   const [rowsCompare, setRowsCompare] = useState([]);
 
   const [deleteButtonActive, setDeleteButtonActive] = useState(false);
@@ -40,40 +43,43 @@ function Canvas() {
   const [socketChange, setSocketChange] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(0);
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
-  const { sendDeso } = useContext(DesoContext);
+  const { sendDeso, getSingleProfile } = useContext(DesoContext);
   const fillColor = (rowIndex, colIndex) => {
-    getRowsFromApiToComparison();
-    if (rowsCompare.length !== 0) {
-      let newGrid = [...rows];
-      if (rowsCompare[rowIndex][colIndex] !== "") {
-        toast.error("This pixel has signed into the system.");
-      } else if (deleteButtonActive && newGrid[rowIndex][colIndex] !== "") {
-        newGrid[rowIndex][colIndex] = "";
-        setCount((prev) => prev - 1);
-      } else if (deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
-        newGrid[rowIndex][colIndex] = "";
-      } else if (!deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
-        newGrid[rowIndex][colIndex] = currentSelectedColor;
-        setCount((prev) => prev + 1);
-      }
-    }
+    // getRowsFromApiToComparison();
+    // if (rowsCompare.length !== 0) {
+    //   let newGrid = [...rows];
+    //   if (rowsCompare[rowIndex][colIndex] !== "") {
+    //     toast.error("This pixel has signed into the system.");
+    //   } else if (deleteButtonActive && newGrid[rowIndex][colIndex] !== "") {
+    //     newGrid[rowIndex][colIndex] = "";
+    //     setCount((prev) => prev - 1);
+    //   } else if (deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
+    //     newGrid[rowIndex][colIndex] = "";
+    //   } else if (!deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
+    //     newGrid[rowIndex][colIndex] = currentSelectedColor;
+    //     setCount((prev) => prev + 1);
+    //   }
+    // }
+    let newGrid = [...rows];
+    newGrid[rowIndex][colIndex] = currentSelectedColor;
+    setCount((prev) => prev + 1);
   };
 
-  const getRowsFromApi = async () => {
-    await fetch("/api/v1/get-rows", {})
-      .then((resp) => resp.json())
-      .then((data) => {
-        setRows(data.rows);
-      });
-  };
-  const JWT_Token = "Kaan";
-  const getRowsFromApiToComparison = async () => {
-    await fetch("/api/v1/get-rows", {})
-      .then((resp) => resp.json())
-      .then((data) => {
-        setRowsCompare(data.rows);
-      });
-  };
+  // const getRowsFromApi = async () => {
+  //   await fetch("/api/v1/get-rows", {})
+  //     .then((resp) => resp.json())
+  //     .then((data) => {
+  //       setRows(data.rows);
+  //     });
+  // };
+
+  // const getRowsFromApiToComparison = async () => {
+  //   await fetch("/api/v1/get-rows", {})
+  //     .then((resp) => resp.json())
+  //     .then((data) => {
+  //       setRowsCompare(data.rows);
+  //     });
+  // };
 
   const submitPixel = async () => {
     await fetch("/api/v1/add-rows", {
@@ -82,7 +88,6 @@ function Canvas() {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-        Authorization: `Bearer ${JWT_Token}`,
       },
     })
       .then((response) => response.json())
@@ -99,26 +104,26 @@ function Canvas() {
     }, 1000);
   };
 
-  useEffect(() => {
-    getRowsFromApi();
-    getRowsFromApiToComparison();
-  }, []);
+  // useEffect(() => {
+  //   // getRowsFromApi();
+  //   // getRowsFromApiToComparison();
+  // }, []);
 
-  useEffect(() => {
-    socket.on("message", () => {
-      setCount(0);
-      getRowsFromApi();
-      setSocketChange((prev) => prev + 1);
-    });
-  }, [socketChange]);
+  // useEffect(() => {
+  //   socket.on("message", () => {
+  //     setCount(0);
+  //     getRowsFromApi();
+  //     setSocketChange((prev) => prev + 1);
+  //   });
+  // }, [socketChange]);
 
   const confirmTransaction = async () => {
     const token = JSON.parse(localStorage.getItem("identityUsersV2")).publicKey;
-    sendDeso(token, count);
     setLoading(true);
+    await sendDeso(token, count);
     await submitPixel();
-    socket.emit("message", rows);
-    getRowsFromApiToComparison();
+    // socket.emit("message", rows);
+    // getRowsFromApiToComparison();
     setValue((value) => value + 1);
     document.getElementById("my-modal").checked = false;
     setCount(0);
@@ -126,14 +131,15 @@ function Canvas() {
     toast.success("Selected pixels added to the system.");
   };
 
-  useEffect(() => {
-    if (isSubmitted === 0 && socketChange >= 1) {
-      toast.warn(
-        `Someone has updated the canvas. You may need to fill your pixels again!!!`
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socketChange]);
+  // useEffect(() => {
+  //   if (isSubmitted === 0 && socketChange >= 1) {
+  //     toast.warn(
+  //       `Someone has updated the canvas. You may need to fill your pixels again!!!`
+  //     );
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [socketChange]);
+
   return (
     <>
       <iframe
@@ -152,7 +158,7 @@ function Canvas() {
         }}
       ></iframe>
 
-      <div className="flex flex-col gap-5 transition-all  text-center my-10">
+      <div className="flex flex-col gap-5 transition-all  text-center my-6">
         <input type="checkbox" id="my-modal" className="modal-toggle" />
 
         {!loading && (
@@ -173,7 +179,7 @@ function Canvas() {
                 </label>
                 <label
                   id="cancel"
-                  for="my-modal"
+                  htmlFor="my-modal"
                   className="btn btn-secondary "
                 >
                   Cancel
@@ -189,25 +195,38 @@ function Canvas() {
           style={{ gap: "1px" }}
           className="flex flex-col items-center xl:items-center md:items-center"
         >
-          {rows.map((row, rowIndex) => (
+          {rows?.rows.map((row, rowIndex) => (
             <div style={{ gap: "1px" }} className="flex" key={rowIndex}>
               {row.map((col, colIndex) => (
-                <div
+                <Tooltip
+                  // title={() => getSingleProfile(token.publicKey)}
+                  title={col.slice(-10)}
                   key={colIndex}
-                  onClick={() => {
-                    fillColor(rowIndex, colIndex);
-                  }}
-                  className={`
+                  disableFocusListener
+                >
+                  <div
+                    // onClick={() => {
+                    //   fillColor(rowIndex, colIndex);
+                    //   console.log("rowcol", rowIndex, colIndex);
+                    // }}
+                    className={`pixel
                 w-3  md:w-5 sm:w-5 
                 h-3   md:h-5 sm:h-5 transition-all cursor-pointer ${
                   col || "bg-purple-200"
                 }`}
-                />
+                  ></div>
+                </Tooltip>
               ))}
             </div>
           ))}
         </div>
+
         <div className="flex items-center justify-center flex-col flex-wrap">
+          <div className="py-1 my-1">
+            <p style={{ background: "deeppink" }} className="p-1 rounded-lg">
+              Total Selected Pixels : {count}
+            </p>
+          </div>
           <div className="flex justify-center gap-1 flex-wrap">
             {colors.map((color, index) => (
               <button
@@ -244,11 +263,7 @@ function Canvas() {
               </span>
             </button>
           </div>
-          <div className="py-1 my-2">
-            <p style={{ background: "deeppink" }} className="p-1 rounded-lg">
-              Total Selected Pixels : {count}
-            </p>
-          </div>
+
           <button
             onClick={() => {
               if (token) {
@@ -278,6 +293,7 @@ function Canvas() {
             among all contributors evenly, depending on how many pixels they
             contributed to the canvas.
           </p>
+          <LeaderBoard/>
           <h3>Earn by contributing</h3>
           <p>
             By contributing to the artwork you are not only digitally signing
@@ -293,6 +309,7 @@ function Canvas() {
             afterwards: 6.1% of sale proceeds will be distributed amongst
             contributors.
           </p>
+
           <ul className="steps steps-vertical lg:steps-horizontal mx-2 p-0">
             <li className="step step-success">
               <span className="mx-5">
@@ -320,6 +337,7 @@ function Canvas() {
               </span>
             </li>
           </ul>
+
         </article>
       </div>
     </>

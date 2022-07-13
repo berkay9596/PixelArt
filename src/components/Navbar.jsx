@@ -15,7 +15,7 @@ const Navbar = () => {
         <div className="flex-none">
           <div className="dropdown dropdown-end"></div>
           <div className="dropdown dropdown-end">
-            <label tabindex="0" className="btn btn-ghost btn-circle avatar">
+            <label tabIndex="0" className="btn btn-ghost btn-circle avatar">
               <div className="w-10 rounded-full">
                 <img
                   src={`https://node.deso.org/api/v0/get-single-profile-picture/${token?.publicKey}`}
@@ -25,7 +25,7 @@ const Navbar = () => {
             </label>
             <ul
               id="navbar"
-              tabindex="0"
+              tabIndex="0"
               className="menu menu-compact dropdown-content mt-3 p-2 shadow rounded-box w-36 items-center"
             >
               <button

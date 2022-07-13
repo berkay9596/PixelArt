@@ -74,3 +74,7 @@ li {
 /* .Toastify__toast-container--top-right {
   right: 0em !important;
 } */
+
+.pixel:hover {
+  opacity: 0.8;
+}

@@ -35,6 +35,12 @@ export function DesoProvider({ children }) {
     let transactionHex = await createSend?.TransactionHex;
     let signedTransactionHex = await desoIdentity?.signTxAsync(transactionHex);
     let rtnSend = await desoApi?.submitTransaction(signedTransactionHex);
+    console.log("rtnSend", rtnSend);
+  };
+
+  const getSingleProfile = async (publicKey) => {
+    let profileData = await desoApi?.getSingleProfile(publicKey);
+    console.log("profiledata", profileData);
   };
   return (
     <DesoContext.Provider
@@ -45,6 +51,7 @@ export function DesoProvider({ children }) {
         desoLogout,
         sendDeso,
         publicKey,
+        getSingleProfile,
       }}
     >
       {children}
