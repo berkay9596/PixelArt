@@ -67,9 +67,10 @@ function Canvas() {
 
   const getRowsFromApi = async () => {
     await fetch(
-      // "/api/v1/get-rows", 
+      // "/api/v1/get-rows",
       "https://www.desopixel.art/api/v1/get-rows",
-      {})
+      {}
+    )
       .then((resp) => resp.json())
       .then((data) => {
         setRows(data.rows);
@@ -80,7 +81,8 @@ function Canvas() {
     await fetch(
       // "/api/v1/get-rows",
       "https://www.desopixel.art/api/v1/get-rows",
-      {})
+      {}
+    )
       .then((resp) => resp.json())
       .then((data) => {
         setRowsCompare(data.rows);
@@ -92,13 +94,14 @@ function Canvas() {
       // "/api/v1/add-rows",
       "https://www.desopixel.art/api/v1/add-rows",
       {
-      method: "POST",
-      body: JSON.stringify({ rows: rows }),
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    })
+        method: "POST",
+        body: JSON.stringify({ rows: rows }),
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      }
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log("Success:", data);
@@ -292,6 +295,7 @@ function Canvas() {
           </button>
         </div>
         <article className="prose mx-auto">
+          <LeaderBoard />
           <h2> Collaborative pixel painting</h2>
           <p>
             DESOPIXELART is the first ever collectible, collaborative pixel
@@ -302,7 +306,7 @@ function Canvas() {
             among all contributors evenly, depending on how many pixels they
             contributed to the canvas.
           </p>
-          <LeaderBoard/>
+
           <h3>Earn by contributing</h3>
           <p>
             By contributing to the artwork you are not only digitally signing
@@ -320,25 +324,25 @@ function Canvas() {
           </p>
 
           <ul className="steps steps-vertical lg:steps-horizontal mx-2 p-0">
-            <li className="step step-success">
+            <li className="step step-success ">
               <span className="mx-5">
                 Paint any pixels you want on any available canvas.
               </span>
             </li>
-            <li className="step step-success">
+            <li className="step step-success ">
               <span className="mx-4">
                 {" "}
                 The more you paint, the bigger share of the painting you get.
               </span>
             </li>
-            <li className="step step-success">
+            <li className="step step-success ">
               <span className="mx-1">
                 {" "}
                 After all pixels are set, the canvas is put up for auction.
                 Anyone can make a bid.
               </span>
             </li>
-            <li className="step step-success">
+            <li className="step step-success ">
               <span className="mx-4">
                 {" "}
                 96.1% of the winning bid from auction is distributed to the
@@ -346,7 +350,6 @@ function Canvas() {
               </span>
             </li>
           </ul>
-
         </article>
       </div>
     </>

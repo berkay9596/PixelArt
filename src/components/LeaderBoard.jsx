@@ -2,13 +2,17 @@ import React from "react";
 
 const LeaderBoard = () => {
   return (
-    <div className="text-white flex flex-col container mx-auto prose">
-      <h3 className="my-5">Leaderboard</h3>
+    <div className="text-white flex flex-col container mx-auto prose board-bg">
+      <h3 className="my-5 board">Leaderboard</h3>
       <div className="flex items-between mx-6">
         <div>
           POS
           <ul
-            style={{ height: "100%", justifyContent: "space-around" }}
+            style={{
+              height: "100%",
+              justifyContent: "space-around",
+              marginRight: "0.4rem",
+            }}
             className="p-0 flex flex-col"
           >
             <li style={{ borderRight: `3px solid red` }}>1</li>
@@ -84,19 +88,6 @@ const LeaderBoard = () => {
               <li>4</li>
             </ul>
           </div>
-          {/* <div>
-            COUNT
-            <ul
-              style={{ height: "100%", justifyContent: "space-evenly" }}
-              className="p-0 flex flex-col"
-            >
-              <button className="btn btn-primary">Congratulate</button>
-              <button className="btn btn-primary">Congratulate</button>
-              <button className="btn btn-primary">Congratulate</button>
-              <button className="btn btn-primary">Congratulate</button>
-              <button className="btn btn-primary">Congratulate</button>
-            </ul>
-          </div> */}
         </div>
       </div>
       <div
@@ -108,9 +99,12 @@ const LeaderBoard = () => {
           marginTop: "2rem",
         }}
       >
-        Your pixel count : 10
+        <span className="my-3 bg-green-600 p-1 rounded-lg">
+          {" "}
+          Your pixel count : 2
+        </span>
         <button
-          style={{ width: "50%", display: "flex" }}
+          style={{ width: "50%", display: "flex", marginBottom: "3rem" }}
           className="btn btn-primary"
           onClick={() => {
             window.scrollTo({

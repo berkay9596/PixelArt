@@ -34,11 +34,6 @@ p {
   color: white;
 }
 
-ul,
-li {
-  color: white;
-}
-
 #confirm {
   @apply bg-success;
   @apply border-green-600;
@@ -77,4 +72,21 @@ li {
 
 .pixel:hover {
   opacity: 0.8;
+}
+
+.board {
+  color: rgb(92, 143, 238) !important;
+}
+
+li {
+  color: white 
+}
+
+.board-bg {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
