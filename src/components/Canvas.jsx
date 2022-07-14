@@ -210,8 +210,8 @@ function Canvas() {
                     //   console.log("rowcol", rowIndex, colIndex);
                     // }}
                     className={`pixel
-                w-3  md:w-5 sm:w-5 
-                h-3   md:h-5 sm:h-5 transition-all cursor-pointer ${
+                w-3  md:w-8 sm:w-5 
+                h-3   md:h-8 sm:h-5 transition-all cursor-pointer ${
                   col || "bg-purple-200"
                 }`}
                   ></div>
