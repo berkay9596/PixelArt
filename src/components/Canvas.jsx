@@ -6,7 +6,7 @@ import BackdropWithSpinner from "./BackdropWithSpinner";
 // import io from "socket.io-client";
 import { useContext } from "react";
 import DesoContext from "../context/DesoContext";
-import rows from "../rows.json";
+// import rows from "../rows.json";
 import { Tooltip } from "@mui/material";
 import LeaderBoard from "./LeaderBoard";
 // let endPoint = "http://localhost:5000";
@@ -35,7 +35,7 @@ function Canvas() {
   const [value, setValue] = useState(0);
   const [count, setCount] = useState(0);
 
-  // const [rows, setRows] = useState([]);
+  const [rows, setRows] = useState([]);
   const [rowsCompare, setRowsCompare] = useState([]);
 
   const [deleteButtonActive, setDeleteButtonActive] = useState(false);
@@ -45,44 +45,53 @@ function Canvas() {
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
   const { sendDeso, getSingleProfile } = useContext(DesoContext);
   const fillColor = (rowIndex, colIndex) => {
-    // getRowsFromApiToComparison();
-    // if (rowsCompare.length !== 0) {
-    //   let newGrid = [...rows];
-    //   if (rowsCompare[rowIndex][colIndex] !== "") {
-    //     toast.error("This pixel has signed into the system.");
-    //   } else if (deleteButtonActive && newGrid[rowIndex][colIndex] !== "") {
-    //     newGrid[rowIndex][colIndex] = "";
-    //     setCount((prev) => prev - 1);
-    //   } else if (deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
-    //     newGrid[rowIndex][colIndex] = "";
-    //   } else if (!deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
-    //     newGrid[rowIndex][colIndex] = currentSelectedColor;
-    //     setCount((prev) => prev + 1);
-    //   }
-    // }
+    getRowsFromApiToComparison();
+    if (rowsCompare.length !== 0) {
+      let newGrid = [...rows];
+      if (rowsCompare[rowIndex][colIndex] !== "") {
+        toast.error("This pixel has signed into the system.");
+      } else if (deleteButtonActive && newGrid[rowIndex][colIndex] !== "") {
+        newGrid[rowIndex][colIndex] = "";
+        setCount((prev) => prev - 1);
+      } else if (deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
+        newGrid[rowIndex][colIndex] = "";
+      } else if (!deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
+        newGrid[rowIndex][colIndex] = currentSelectedColor;
+        setCount((prev) => prev + 1);
+      }
+    }
     let newGrid = [...rows];
     newGrid[rowIndex][colIndex] = currentSelectedColor;
     setCount((prev) => prev + 1);
   };
 
-  // const getRowsFromApi = async () => {
-  //   await fetch("/api/v1/get-rows", {})
-  //     .then((resp) => resp.json())
-  //     .then((data) => {
-  //       setRows(data.rows);
-  //     });
-  // };
+  const getRowsFromApi = async () => {
+    await fetch(
+      // "/api/v1/get-rows", 
+      "https://www.desopixel.art/api/v1/get-rows",
+      {})
+      .then((resp) => resp.json())
+      .then((data) => {
+        setRows(data.rows);
+      });
+  };
 
-  // const getRowsFromApiToComparison = async () => {
-  //   await fetch("/api/v1/get-rows", {})
-  //     .then((resp) => resp.json())
-  //     .then((data) => {
-  //       setRowsCompare(data.rows);
-  //     });
-  // };
+  const getRowsFromApiToComparison = async () => {
+    await fetch(
+      // "/api/v1/get-rows",
+      "https://www.desopixel.art/api/v1/get-rows",
+      {})
+      .then((resp) => resp.json())
+      .then((data) => {
+        setRowsCompare(data.rows);
+      });
+  };
 
   const submitPixel = async () => {
-    await fetch("/api/v1/add-rows", {
+    await fetch(
+      // "/api/v1/add-rows",
+      "https://www.desopixel.art/api/v1/add-rows",
+      {
       method: "POST",
       body: JSON.stringify({ rows: rows }),
       headers: {
@@ -104,10 +113,10 @@ function Canvas() {
     }, 1000);
   };
 
-  // useEffect(() => {
-  //   // getRowsFromApi();
-  //   // getRowsFromApiToComparison();
-  // }, []);
+  useEffect(() => {
+    getRowsFromApi();
+    getRowsFromApiToComparison();
+  }, []);
 
   // useEffect(() => {
   //   socket.on("message", () => {
@@ -195,7 +204,7 @@ function Canvas() {
           style={{ gap: "1px" }}
           className="flex flex-col items-center xl:items-center md:items-center"
         >
-          {rows?.rows.map((row, rowIndex) => (
+          {rows?.map((row, rowIndex) => (
             <div style={{ gap: "1px" }} className="flex" key={rowIndex}>
               {row.map((col, colIndex) => (
                 <Tooltip
@@ -205,10 +214,10 @@ function Canvas() {
                   disableFocusListener
                 >
                   <div
-                    // onClick={() => {
-                    //   fillColor(rowIndex, colIndex);
-                    //   console.log("rowcol", rowIndex, colIndex);
-                    // }}
+                    onClick={() => {
+                      fillColor(rowIndex, colIndex);
+                      console.log("rowcol", rowIndex, colIndex);
+                    }}
                     className={`pixel
                 w-3  md:w-8 sm:w-5 
                 h-3   md:h-8 sm:h-5 transition-all cursor-pointer ${
