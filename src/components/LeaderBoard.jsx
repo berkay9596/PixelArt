@@ -112,12 +112,13 @@ const LeaderBoard = () => {
         <button
           style={{ width: "50%", display: "flex" }}
           className="btn btn-primary"
-          onClick={() =>
+          onClick={() => {
             window.scrollTo({
               top: 0,
               behavior: "smooth",
-            })
-          }
+            });
+            window.__forceSmoothScrollPolyfill__ = true;
+          }}
         >
           Increse it
         </button>
