@@ -79,7 +79,8 @@ p {
 }
 
 li {
-  color: white 
+  color: white ;
+  list-style-type: none;
 }
 
 .board-bg {

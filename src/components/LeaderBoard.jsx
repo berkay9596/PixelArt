@@ -2,7 +2,7 @@ import React from "react";
 
 const LeaderBoard = () => {
   return (
-    <div className="text-white flex flex-col container mx-auto prose board-bg">
+    <div className="text-white flex flex-col container mx-auto prose board-bg my-12">
       <h3 className="my-5 board">Leaderboard</h3>
       <div className="flex items-between mx-6">
         <div>
@@ -99,7 +99,7 @@ const LeaderBoard = () => {
           marginTop: "2rem",
         }}
       >
-        <span className="my-3 bg-green-600 p-1 rounded-lg">
+        <span className="my-3 p-1 rounded-lg">
           {" "}
           Your pixel count : 2
         </span>

@@ -170,7 +170,7 @@ function Canvas() {
         }}
       ></iframe>
 
-      <div className="flex flex-col gap-5 transition-all  text-center my-6">
+      <div className="flex flex-col gap-5 transition-all  text-center my-12">
         <input type="checkbox" id="my-modal" className="modal-toggle" />
 
         {!loading && (
