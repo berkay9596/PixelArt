@@ -60,9 +60,9 @@ function Canvas() {
         setCount((prev) => prev + 1);
       }
     }
-    let newGrid = [...rows];
-    newGrid[rowIndex][colIndex] = currentSelectedColor;
-    setCount((prev) => prev + 1);
+    // let newGrid = [...rows];
+    // newGrid[rowIndex][colIndex] = currentSelectedColor;
+    // setCount((prev) => prev + 1);
   };
 
   const getRowsFromApi = async () => {
