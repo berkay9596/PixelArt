@@ -6,8 +6,8 @@ const Navbar = () => {
   const navigate = useNavigate();
   const { isLoggedIn, desoLogin, desoLogout } = useContext(DesoContext);
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
-  const deneme = document.getElementById("deneme");
-  console.log("deneme", deneme);
+  let deneme = document.getElementById("deneme");
+
   return (
     <div className="navbar flex items-center">
       <div className="flex-1 h-14">
@@ -36,12 +36,7 @@ const Navbar = () => {
                 className="btn btn-primary my-1"
                 onClick={() => {
                   navigate("/leaderboard");
-                  // deneme.addEventListener("click", function (x) {
-                  //   console.log("hi");
-                  // });
-                  deneme.click();
                 }}
-                // style={{minWidth:"8rem"}}
               >
                 LEADERBOARD
               </button>
