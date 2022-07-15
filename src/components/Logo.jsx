@@ -1,6 +1,12 @@
+import React from "react";
+import { useNavigate } from "react-router-dom";
 const Logo = () => {
+  const navigate = useNavigate();
   return (
-    <h1 className="font-black font-['Monoton'] text-zinc-500 text-sm md:text-4xl tracking-widest m-0">
+    <h1
+      onClick={() => navigate("/")}
+      className="cursor-pointer font-black font-['Monoton'] text-zinc-500 text-sm md:text-4xl tracking-widest m-0"
+    >
       <span className="font-['Monoton'] text-rose-500">D</span>
       <span className="font-['Monoton'] text-amber-500">E</span>
       <span className="font-['Monoton'] text-teal-500">S</span>

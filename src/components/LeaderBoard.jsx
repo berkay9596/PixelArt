@@ -1,9 +1,10 @@
 import React from "react";
-
+import { useNavigate } from "react-router-dom";
 const LeaderBoard = () => {
+  const navigate = useNavigate();
   return (
     <div className="text-white flex flex-col container mx-auto prose board-bg my-12">
-      <h3 className="my-5 board">Leaderboard</h3>
+      <h3 className="my-5 board text-center">Leaderboard</h3>
       <div className="flex items-between mx-6">
         <div>
           POS
@@ -23,7 +24,7 @@ const LeaderBoard = () => {
           </ul>
         </div>
         <div className="mx-5">
-          USER
+          <span className="mx-14">USER</span>
           <ul
             style={{
               height: "100%",
@@ -99,20 +100,11 @@ const LeaderBoard = () => {
           marginTop: "2rem",
         }}
       >
-        <span className="my-3 p-1 rounded-lg">
-          {" "}
-          Your pixel count : 2
-        </span>
+        <span className="my-3 p-1 rounded-lg"> Your pixel count : 2</span>
         <button
           style={{ width: "50%", display: "flex", marginBottom: "3rem" }}
           className="btn btn-primary"
-          onClick={() => {
-            window.scrollTo({
-              top: 0,
-              behavior: "smooth",
-            });
-            window.__forceSmoothScrollPolyfill__ = true;
-          }}
+          onClick={() => navigate("/")}
         >
           Increse it
         </button>

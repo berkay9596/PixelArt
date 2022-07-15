@@ -6,9 +6,7 @@ import BackdropWithSpinner from "./BackdropWithSpinner";
 // import io from "socket.io-client";
 import { useContext } from "react";
 import DesoContext from "../context/DesoContext";
-// import rows from "../rows.json";
 import { Tooltip } from "@mui/material";
-import LeaderBoard from "./LeaderBoard";
 // let endPoint = "http://localhost:5000";
 // let socket = io.connect(`${endPoint}`);
 
@@ -22,6 +20,7 @@ function Canvas() {
     "bg-lime-500",
     "bg-green-500",
     "bg-emerald-500",
+    "bg-slate-500",
     "bg-cyan-500",
     "bg-sky-500",
     "bg-blue-500",
@@ -30,6 +29,8 @@ function Canvas() {
     "bg-purple-500",
     "bg-fuchsia-500",
     "bg-pink-500",
+    "bg-teal-500",
+
   ];
   const [currentSelectedColor, setCurrentSelectedColor] = useState(colors[0]);
   const [value, setValue] = useState(0);
@@ -222,8 +223,8 @@ function Canvas() {
                       console.log("rowcol", rowIndex, colIndex);
                     }}
                     className={`pixel
-                w-3  md:w-8 sm:w-5 
-                h-3   md:h-8 sm:h-5 transition-all cursor-pointer ${
+                w-3  md:w-7 sm:w-5 
+                h-3   md:h-7 sm:h-5 transition-all cursor-pointer ${
                   col || "bg-purple-200"
                 }`}
                   ></div>
@@ -295,7 +296,6 @@ function Canvas() {
           </button>
         </div>
         <article className="prose mx-auto">
-          <LeaderBoard />
           <h2> Collaborative pixel painting</h2>
           <p>
             DESOPIXELART is the first ever collectible, collaborative pixel
