@@ -21,7 +21,6 @@ export function DesoProvider({ children }) {
   const desoLogin = async () => {
     const user = await desoIdentity.loginAsync(4);
     setIsLoggedIn(true);
-    console.log("user", user);
     setPublicKey(user.publicKey);
     toast.success("Login successful");
   };
@@ -39,8 +38,7 @@ export function DesoProvider({ children }) {
   };
 
   const getSingleProfile = async (publicKey) => {
-    let profileData = await desoApi?.getSingleProfile(publicKey);
-    console.log("profiledata", profileData);
+    return await desoApi?.getSingleProfile(publicKey);
   };
   return (
     <DesoContext.Provider

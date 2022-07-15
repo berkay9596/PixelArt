@@ -131,6 +131,7 @@ function Canvas() {
   // }, [socketChange]);
 
   const confirmTransaction = async () => {
+    setLoading(true);
     const token = JSON.parse(localStorage.getItem("identityUsersV2")).publicKey;
     await sendDeso(token, count);
     await submitPixel();
@@ -139,7 +140,7 @@ function Canvas() {
     setValue((value) => value + 1);
     document.getElementById("my-modal").checked = false;
     setCount(0);
-    setLoading2(false);
+    setLoading(false);
     toast.success("Selected pixels added to the system.");
   };
 

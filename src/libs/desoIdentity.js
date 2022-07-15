@@ -91,7 +91,6 @@ class DesoIdentity {
     );
   }
   getInfo() {
-    console.log("getinfo");
     const id = this.uuid();
 
     this.source.postMessage(
@@ -105,7 +104,6 @@ class DesoIdentity {
   }
 
   handleLogin(payload) {
-    // console.log(payload);
     if (this.identityWindow) {
       this.identityWindow.close();
       this.identityWindow = null;
@@ -119,8 +117,6 @@ class DesoIdentity {
   }
 
   handleSign(payload) {
-    console.log(payload);
-
     const signedTransactionHex = payload["signedTransactionHex"];
     if (this.identityWindow) {
       this.identityWindow.close();
@@ -145,14 +141,12 @@ class DesoIdentity {
       this.init = true;
 
       for (const e of this.pendingRequests) {
-        console.log("i'm in the pendingRequests loop");
         e.source.postMessage(e, "*");
       }
 
       this.pendingRequests = [];
       this.pm_id = e.data.id;
       this.source = e.source;
-      console.log("this.source", this.source);
     }
     this.respond(e.source, e.data.id, {});
   }
@@ -177,10 +171,8 @@ class DesoIdentity {
       if (method === "initialize") {
         this.handleInit(message);
       } else if ("signedTransactionHex" in payload) {
-        console.log("signedTransactionHex", payload);
         this.handleSign(payload);
       } else if ("approvalRequired" in payload) {
-        console.log("approvalRequired", payload);
         this.approveSignTx(this.transactionHex);
       } else if (method === "login") {
         this.handleLogin(payload);
