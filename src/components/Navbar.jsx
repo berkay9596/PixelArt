@@ -34,7 +34,7 @@ const Navbar = () => {
             >
               <button
                 className="btn btn-primary my-1"
-                style={{ minWidth: "8.5rem" }}
+                style={{ minWidth: "9rem" }}
                 onClick={() => {
                   navigate("/leaderboard");
                 }}
@@ -44,7 +44,7 @@ const Navbar = () => {
               <button
                 className="btn btn-secondary "
                 onClick={() => desoLogout()}
-                style={{ minWidth: "8.5rem" }}
+                style={{ minWidth: "9rem" }}
               >
                 LOGOUT
               </button>
