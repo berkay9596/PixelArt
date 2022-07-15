@@ -30,7 +30,6 @@ function Canvas() {
     "bg-fuchsia-500",
     "bg-pink-500",
     "bg-teal-500",
-
   ];
   const [currentSelectedColor, setCurrentSelectedColor] = useState(colors[0]);
   const [value, setValue] = useState(0);
@@ -44,7 +43,8 @@ function Canvas() {
   const [socketChange, setSocketChange] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(0);
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
-  const { sendDeso, getSingleProfile } = useContext(DesoContext);
+  const { sendDeso, getSingleProfile, loading2, setLoading2 } =
+    useContext(DesoContext);
   const fillColor = (rowIndex, colIndex) => {
     getRowsFromApiToComparison();
     if (rowsCompare.length !== 0) {
@@ -132,16 +132,20 @@ function Canvas() {
 
   const confirmTransaction = async () => {
     const token = JSON.parse(localStorage.getItem("identityUsersV2")).publicKey;
-    setLoading(true);
+    setLoading2(true);
     await sendDeso(token, count);
-    await submitPixel();
-    // socket.emit("message", rows);
-    // getRowsFromApiToComparison();
-    setValue((value) => value + 1);
-    document.getElementById("my-modal").checked = false;
-    setCount(0);
-    setLoading(false);
-    toast.success("Selected pixels added to the system.");
+    if (loading2) {
+      await submitPixel();
+      // socket.emit("message", rows);
+      // getRowsFromApiToComparison();
+      setValue((value) => value + 1);
+      document.getElementById("my-modal").checked = false;
+      setCount(0);
+      setLoading2(false);
+      toast.success("Selected pixels added to the system.");
+    } else {
+      document.getElementById("my-modal").checked = false;
+    }
   };
 
   // useEffect(() => {
@@ -203,7 +207,7 @@ function Canvas() {
         )}
 
         <Confetti value={value} />
-        {loading && <BackdropWithSpinner />}
+        {loading || (loading2 && <BackdropWithSpinner />)}
         <div
           style={{ gap: "1px" }}
           className="flex flex-col items-center xl:items-center md:items-center"
