@@ -132,20 +132,15 @@ function Canvas() {
 
   const confirmTransaction = async () => {
     const token = JSON.parse(localStorage.getItem("identityUsersV2")).publicKey;
-    setLoading2(true);
     await sendDeso(token, count);
-    if (loading2) {
-      await submitPixel();
-      // socket.emit("message", rows);
-      // getRowsFromApiToComparison();
-      setValue((value) => value + 1);
-      document.getElementById("my-modal").checked = false;
-      setCount(0);
-      setLoading2(false);
-      toast.success("Selected pixels added to the system.");
-    } else {
-      document.getElementById("my-modal").checked = false;
-    }
+    await submitPixel();
+    // socket.emit("message", rows);
+    // getRowsFromApiToComparison();
+    setValue((value) => value + 1);
+    document.getElementById("my-modal").checked = false;
+    setCount(0);
+    setLoading2(false);
+    toast.success("Selected pixels added to the system.");
   };
 
   // useEffect(() => {
@@ -207,7 +202,7 @@ function Canvas() {
         )}
 
         <Confetti value={value} />
-        {loading || (loading2 && <BackdropWithSpinner />)}
+        {loading && <BackdropWithSpinner />}
         <div
           style={{ gap: "1px" }}
           className="flex flex-col items-center xl:items-center md:items-center"

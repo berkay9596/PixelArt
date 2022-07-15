@@ -34,6 +34,7 @@ const Navbar = () => {
             >
               <button
                 className="btn btn-primary my-1"
+                style={{ minWidth: "8.5rem" }}
                 onClick={() => {
                   navigate("/leaderboard");
                 }}
