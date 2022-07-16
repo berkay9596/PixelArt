@@ -208,12 +208,12 @@ function Canvas() {
           {rows?.map((row, rowIndex) => (
             <div style={{ gap: "1px" }} className="flex" key={rowIndex}>
               {row.map((col, colIndex) => (
-                <Tooltip
-                  // title={() => getSingleProfile(token.publicKey)}
-                  title={col.slice(-10)}
-                  key={colIndex}
-                  disableFocusListener
-                >
+                // <Tooltip
+                //   // title={() => getSingleProfile(token.publicKey)}
+                //   title={col.slice(-10)}
+                //   key={colIndex}
+                //   disableFocusListener
+                // >
                   <div
                     onClick={() => {
                       fillColor(rowIndex, colIndex);
@@ -225,7 +225,7 @@ function Canvas() {
                   col || "bg-purple-200"
                 }`}
                   ></div>
-                </Tooltip>
+                // </Tooltip>
               ))}
             </div>
           ))}
