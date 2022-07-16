@@ -104,7 +104,10 @@ const LeaderBoard = () => {
         <button
           style={{ width: "50%", display: "flex", marginBottom: "3rem" }}
           className="btn btn-primary"
-          onClick={() => navigate("/")}
+          onClick={() => {
+            navigate("/");
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }}
         >
           Increse it
         </button>
