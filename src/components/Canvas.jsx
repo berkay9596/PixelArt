@@ -232,8 +232,8 @@ function Canvas() {
         </div>
 
         <div className="flex items-center justify-center flex-col flex-wrap">
-          <div className="py-1 my-1">
-            <p style={{ background: "deeppink" }} className="p-1 rounded-lg">
+          <div className="py-2 my-2">
+            <p style={{ background: "deeppink" }} className="p-2 rounded-lg max-w-xs min-w-max">
               Total Selected Pixels : {count}
             </p>
           </div>
