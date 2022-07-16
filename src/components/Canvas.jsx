@@ -57,12 +57,12 @@ function Canvas() {
       } else if (deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
         newGrid[rowIndex][colIndex] = "";
       } else if (!deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
-        newGrid[rowIndex][colIndex] = currentSelectedColor;
+        newGrid[rowIndex][colIndex] = `${currentSelectedColor} ${token.publicKey}`;
         setCount((prev) => prev + 1);
       }
     }
   };
-
+console.log("rows",rows)
   const getRowsFromApi = async () => {
     await fetch(
       // "/api/v1/get-rows",
@@ -130,7 +130,7 @@ function Canvas() {
   const confirmTransaction = async () => {
     setLoading(true);
     const token = JSON.parse(localStorage.getItem("identityUsersV2")).publicKey;
-    await sendDeso(token, count);
+    // await sendDeso(token, count);
     await submitPixel();
     // socket.emit("message", rows);
     // getRowsFromApiToComparison();

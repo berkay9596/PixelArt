@@ -1,7 +1,33 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 const LeaderBoard = () => {
   const navigate = useNavigate();
+  const [publicKeys, setPublicKeys] = useState([]);
+  const [publicKeys2, setPublicKeys2] = useState([]);
+  const getPublicKeys = async () => {
+    await fetch(
+      // "/api/v1/get-rows",
+      "https://www.desopixel.art/api/v1/get-rows",
+      {}
+    )
+      .then((resp) => resp.json())
+      .then((data) => {
+        setPublicKeys(data.rows);
+      });
+  };
+  useEffect(() => {
+    getPublicKeys();
+  }, []);
+
+
+  publicKeys.map((pk) => pk.map((p) => p !== "" && publicKeys2.push(p)));
+  // publicKeys2.map((x) => x.slice(-10));
+  const count = {};
+ 
+  publicKeys2.forEach((element) => {
+    count[element] = (count[element] || 0) + 1;
+  });
+  console.log("count",count)
   return (
     <div className="text-white flex flex-col container mx-auto prose board-bg my-12">
       <h3 className="my-5 board text-center">Leaderboard</h3>
