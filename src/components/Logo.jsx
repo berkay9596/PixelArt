@@ -4,7 +4,10 @@ const Logo = () => {
   const navigate = useNavigate();
   return (
     <h1
-      onClick={() => navigate("/")}
+      onClick={() => {
+        navigate("/");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }}
       className="cursor-pointer font-black font-['Monoton'] text-zinc-500 text-sm md:text-4xl tracking-widest m-0"
     >
       <span className="font-['Monoton'] text-rose-500">D</span>

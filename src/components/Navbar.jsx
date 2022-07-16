@@ -37,6 +37,7 @@ const Navbar = () => {
                 style={{ minWidth: "9rem" }}
                 onClick={() => {
                   navigate("/leaderboard");
+                  window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
               >
                 LEADERBOARD
