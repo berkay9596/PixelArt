@@ -3,6 +3,41 @@ import { useNavigate } from "react-router-dom";
 import DesoContext from "../context/DesoContext";
 import axios from "axios";
 const LeaderBoard = () => {
+  const colors = [
+    "white",
+    "red",
+    "yellow",
+    "purple",
+    "lime",
+    "blue",
+    "green",
+    "cyan",
+    "rebeccapurple",
+    "pink",
+    "wheat",
+    "white",
+    "red",
+    "yellow",
+    "purple",
+    "lime",
+    "blue",
+    "green",
+    "cyan",
+    "rebeccapurple",
+    "pink",
+    "wheat",
+    "white",
+    "red",
+    "yellow",
+    "purple",
+    "lime",
+    "blue",
+    "green",
+    "cyan",
+    "rebeccapurple",
+    "pink",
+    "wheat",
+  ];
   const navigate = useNavigate();
   const [publicKeys, setPublicKeys] = useState([]);
   const [publicKeys2, setPublicKeys2] = useState([]);
@@ -10,6 +45,7 @@ const LeaderBoard = () => {
   const [publicKeyAndCount, setPubicKeyAndCount] = useState();
   const [status, setStatus] = useState(false);
   const { getSingleProfile } = useContext(DesoContext);
+  const [show, setShow] = useState(false);
   const count = {};
   useEffect(() => {
     async function deneme() {
@@ -20,9 +56,10 @@ const LeaderBoard = () => {
     deneme();
     setTimeout(() => {
       setStatus(true);
-    }, 200);
+    }, 400);
   }, []);
   useEffect(() => {
+    setShow(false);
     const a = [...publicKeys];
     a?.map((pk) => pk?.map((p) => p !== "" && publicKeys2.push(p.slice(-55))));
 
@@ -40,129 +77,100 @@ const LeaderBoard = () => {
       }
     };
     usernameLoop();
+    setTimeout(() => {
+      setShow(true);
+    }, 2000);
   }, [status]);
-
+  console.log("show", show);
   return (
-    <div className="text-white flex flex-col container mx-auto prose board-bg my-12">
-      <h3 className="my-5 board text-center">Leaderboard</h3>
-      <div className="flex items-between mx-6">
-        <div>
-          POS
-          <ul
+    <>
+      {show && (
+        <div className="text-white flex flex-col container mx-auto prose board-bg my-12">
+          <h3 className="my-5 board text-center">Leaderboard</h3>
+          <div className="flex items-between mx-6">
+            <div>
+              POS
+              <ul
+                style={{
+                  height: "100%",
+                  justifyContent: "space-around",
+                  marginRight: "0.4rem",
+                }}
+                className="p-0 flex flex-col"
+              >
+                {publicKeyAndCount?.map((x, index) => {
+                  return (
+                    <li style={{ borderRight: `3px solid ${colors[index]}` }}>
+                      {index + 1}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            <div className="mx-5">
+              <span className="mx-14">USER</span>
+              <ul
+                style={{
+                  height: "100%",
+                  justifyContent: "space-around",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                {profileNames?.map((x, index) => (
+                  <li className="flex items-center">
+                    {
+                      <img
+                        className="w-7 h-7"
+                        src={`https://node.deso.org/api/v0/get-single-profile-picture/${publicKeyAndCount[index][0]}`}
+                        alt="profile"
+                      />
+                    }
+                    <span value="" className="mx-3">
+                      {x}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div style={{ marginLeft: "auto" }} className="items-between flex">
+              <div>
+                COUNT
+                <ul
+                  style={{ height: "100%", justifyContent: "space-around" }}
+                  className="p-0 flex flex-col"
+                >
+                  {publicKeyAndCount?.map((x) => {
+                    return <li>{x[1]}</li>;
+                  })}
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div
             style={{
-              height: "100%",
-              justifyContent: "space-around",
-              marginRight: "0.4rem",
-            }}
-            className="p-0 flex flex-col"
-          >
-            <li style={{ borderRight: `3px solid red` }}>1</li>
-            <li style={{ borderRight: `3px solid yellow` }}>2</li>
-            <li style={{ borderRight: `3px solid purple` }}>3</li>
-            <li style={{ borderRight: `3px solid wheat` }}>4</li>
-            {/* <li style={{ borderRight: `3px solid lime` }}>5</li> */}
-          </ul>
-        </div>
-        <div className="mx-5">
-          <span className="mx-14">USER</span>
-          <ul
-            style={{
-              height: "100%",
-              justifyContent: "space-around",
               display: "flex",
               flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: "2rem",
             }}
           >
-            {profileNames?.map((x, index) => (
-              <li className="flex items-center">
-                {
-                  <img
-                    className="w-7 h-7"
-                    src={`https://node.deso.org/api/v0/get-single-profile-picture/${publicKeyAndCount[index][0]}`}
-                    alt="profile"
-                  />
-                }
-                <span className="mx-3">{x}</span>
-              </li>
-            ))}
-            {/* <li className="flex items-center"> 
-              <img
-                className="w-7 h-7"
-                src="https://node.deso.org/api/v0/get-single-profile-picture/BC1YLiVd3t2XfDutMgVFPeShG3RiPGGrSa1qJ5b5f23sHyFAd2nrqU2"
-                alt="profile"
-              />
-              <span className="mx-3"> CloutSwagger </span>
-            </li>
-            <li className="flex items-center">
-              <img
-                className="w-7 h-7"
-                src="https://node.deso.org/api/v0/get-single-profile-picture/BC1YLiVd3t2XfDutMgVFPeShG3RiPGGrSa1qJ5b5f23sHyFAd2nrqU2"
-                alt="profile"
-              />
-              <span className="mx-3"> CloutSwagger </span>
-            </li>{" "}
-            <li className="flex items-center">
-              <img
-                className="w-7 h-7 "
-                src="https://node.deso.org/api/v0/get-single-profile-picture/BC1YLiVd3t2XfDutMgVFPeShG3RiPGGrSa1qJ5b5f23sHyFAd2nrqU2"
-                alt="profile"
-              />
-              <span className="mx-3"> CloutSwagger </span>
-            </li>
-            <li className="flex items-center">
-              <img
-                className="w-7 h-7"
-                src="https://node.deso.org/api/v0/get-single-profile-picture/BC1YLiVd3t2XfDutMgVFPeShG3RiPGGrSa1qJ5b5f23sHyFAd2nrqU2"
-                alt="profile"
-              />
-              <span className="mx-3"> CloutSwagger </span>
-            </li>
-            <li className="flex items-center">
-              <img
-                className="w-7 h-7"
-                src="https://node.deso.org/api/v0/get-single-profile-picture/BC1YLiVd3t2XfDutMgVFPeShG3RiPGGrSa1qJ5b5f23sHyFAd2nrqU2"
-                alt="profile"
-              />
-              <span className="mx-3"> CloutSwagger </span>
-            </li> */}
-          </ul>
-        </div>
-        <div style={{ marginLeft: "auto" }} className="items-between flex">
-          <div>
-            COUNT
-            <ul
-              style={{ height: "100%", justifyContent: "space-around" }}
-              className="p-0 flex flex-col"
+            <span className="my-3 p-1 rounded-lg"> Your pixel count : 2</span>
+            <button
+              style={{ width: "50%", display: "flex", marginBottom: "3rem" }}
+              className="btn btn-primary"
+              onClick={() => {
+                navigate("/");
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }}
             >
-              {publicKeyAndCount?.map((x) => {
-                return <li>{x[1]}</li>;
-              })}
-            </ul>
+              Increse it
+            </button>
           </div>
         </div>
-      </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: "2rem",
-        }}
-      >
-        <span className="my-3 p-1 rounded-lg"> Your pixel count : 2</span>
-        <button
-          style={{ width: "50%", display: "flex", marginBottom: "3rem" }}
-          className="btn btn-primary"
-          onClick={() => {
-            navigate("/");
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }}
-        >
-          Increse it
-        </button>
-      </div>
-    </div>
+      )}
+    </>
   );
 };
 
