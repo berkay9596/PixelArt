@@ -80,9 +80,8 @@ const LeaderBoard = () => {
     usernameLoop();
     setTimeout(() => {
       setShow(true);
-    }, 2000);
+    }, 3500);
   }, [status]);
-  console.log("show", show);
   return (
     <>
       {show ? (
