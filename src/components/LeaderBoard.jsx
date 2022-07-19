@@ -80,7 +80,7 @@ const LeaderBoard = () => {
     usernameLoop();
     setTimeout(() => {
       setShow(true);
-    }, 3500);
+    }, 5000);
   }, [status]);
   return (
     <>
@@ -175,7 +175,7 @@ const LeaderBoard = () => {
           </div>
         </div>
       ) : (
-        <div style={{ minHeight: "70vh" }}>
+        <div style={{ minHeight: "65vh" }}>
           <BackdropWithSpinner />
         </div>
       )}
