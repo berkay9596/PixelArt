@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import DesoContext from "../context/DesoContext";
 import axios from "axios";
+import BackdropWithSpinner from "./BackdropWithSpinner";
 const LeaderBoard = () => {
   const colors = [
     "white",
@@ -84,7 +85,7 @@ const LeaderBoard = () => {
   console.log("show", show);
   return (
     <>
-      {show && (
+      {show ? (
         <div className="text-white flex flex-col container mx-auto prose board-bg my-12">
           <h3 className="my-5 board text-center">Leaderboard</h3>
           <div className="flex items-between mx-6">
@@ -169,7 +170,7 @@ const LeaderBoard = () => {
             </button>
           </div>
         </div>
-      )}
+      ) : <BackdropWithSpinner/>}
     </>
   );
 };
