@@ -100,7 +100,12 @@ const LeaderBoard = () => {
               >
                 {publicKeyAndCount?.map((x, index) => {
                   return (
-                    <li style={{ borderRight: `3px solid ${colors[index]}` }}>
+                    <li
+                      style={{
+                        borderRight: `3px solid ${colors[index]}`,
+                        padding: "0.2rem",
+                      }}
+                    >
                       {index + 1}
                     </li>
                   );
@@ -169,7 +174,9 @@ const LeaderBoard = () => {
             </button>
           </div>
         </div>
-      ) : <BackdropWithSpinner/>}
+      ) : (
+        <BackdropWithSpinner />
+      )}
     </>
   );
 };
