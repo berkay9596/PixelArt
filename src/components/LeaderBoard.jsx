@@ -37,7 +37,6 @@ const LeaderBoard = () => {
         const username = await getSingleProfile(item[0]);
         const all = Promise.all([username]);
         all.then((v) => setProfileNames((prev) => [...prev, v]));
-        console.log("profileNames", profileNames);
       }
     };
     usernameLoop();
