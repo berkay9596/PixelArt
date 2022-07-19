@@ -63,7 +63,6 @@ const LeaderBoard = () => {
     setShow(false);
     const a = [...publicKeys];
     a?.map((pk) => pk?.map((p) => p !== "" && publicKeys2.push(p.slice(-55))));
-
     const b = [...publicKeys2];
     b?.forEach((element) => {
       count[element] = (count[element] || 0) + 1;
@@ -80,7 +79,7 @@ const LeaderBoard = () => {
     usernameLoop();
     setTimeout(() => {
       setShow(true);
-    }, 5000);
+    }, 7000);
   }, [status]);
   return (
     <>
