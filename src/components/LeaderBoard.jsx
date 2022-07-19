@@ -175,7 +175,9 @@ const LeaderBoard = () => {
           </div>
         </div>
       ) : (
-        <BackdropWithSpinner />
+        <div style={{ minHeight: "80vh" }}>
+          <BackdropWithSpinner />
+        </div>
       )}
     </>
   );
