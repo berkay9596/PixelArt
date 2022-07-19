@@ -11,7 +11,6 @@ const LeaderBoard = () => {
   const [status, setStatus] = useState(false);
   const { getSingleProfile } = useContext(DesoContext);
   const count = {};
-
   useEffect(() => {
     async function deneme() {
       await axios
@@ -32,7 +31,6 @@ const LeaderBoard = () => {
       count[element] = (count[element] || 0) + 1;
     });
     const denem = Object.entries(count).sort((a, b) => b[1] - a[1]);
-    console.log("count", denem);
     setPubicKeyAndCount(denem);
     const usernameLoop = async () => {
       for (const item of denem) {
@@ -44,7 +42,7 @@ const LeaderBoard = () => {
     };
     usernameLoop();
   }, [status]);
-  console.log("publicKeyAndCount", publicKeyAndCount);
+
   return (
     <div className="text-white flex flex-col container mx-auto prose board-bg my-12">
       <h3 className="my-5 board text-center">Leaderboard</h3>

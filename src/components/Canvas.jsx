@@ -62,7 +62,7 @@ function Canvas() {
       }
     }
   };
-console.log("rows",rows)
+
   const getRowsFromApi = async () => {
     await fetch(
       // "/api/v1/get-rows",
@@ -217,7 +217,6 @@ console.log("rows",rows)
                   <div
                     onClick={() => {
                       fillColor(rowIndex, colIndex);
-                      console.log("rowcol", rowIndex, colIndex);
                     }}
                     className={`pixel
                 w-3  md:w-7 sm:w-5 
