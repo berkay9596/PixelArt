@@ -29,7 +29,8 @@ class DesoApi {
   async getSingleProfile(publicKey) {
     const path = "/v0/get-single-profile";
     const data = {
-      PublicKeysBase58Check: publicKey,
+      PublicKeyBase58Check: publicKey,
+      NoErrorOnMissing : true
     };
     try {
       const result = await this.getClient().post(path, data);

@@ -38,9 +38,12 @@ export function DesoProvider({ children }) {
   };
 
   const getSingleProfile = async (publicKey) => {
-    return await desoApi?.getSingleProfile(publicKey);
+    const profile = await desoApi?.getSingleProfile(publicKey);
+    const username = profile?.Profile?.Username;
+    return username;
   };
-  return (
+
+return (
     <DesoContext.Provider
       value={{
         isLoggedIn,
