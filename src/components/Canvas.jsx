@@ -43,9 +43,10 @@ function Canvas() {
   const [socketChange, setSocketChange] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(0);
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
-  const { sendDeso, getSingleProfile } =
+  const { sendDeso, getSingleProfile,isLoggedIn } =
     useContext(DesoContext);
   const fillColor = (rowIndex, colIndex) => {
+  if(isLoggedIn){
     getRowsFromApiToComparison();
     if (rowsCompare.length !== 0) {
       let newGrid = [...rows];
@@ -61,6 +62,9 @@ function Canvas() {
         setCount((prev) => prev + 1);
       }
     }
+  }else{
+    toast.error("You need to login first.")
+  }
   };
 
   const getRowsFromApi = async () => {
@@ -215,6 +219,7 @@ function Canvas() {
                 //   disableFocusListener
                 // >
                   <div
+                  key={colIndex}
                     onClick={() => {
                       fillColor(rowIndex, colIndex);
                     }}
