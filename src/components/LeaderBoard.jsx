@@ -51,14 +51,16 @@ const LeaderBoard = () => {
   const count = {};
   useEffect(() => {
     async function deneme() {
-      await axios
-        .get("https://www.desopixel.art/api/v1/get-rows")
-        .then((resp) => setPublicKeys(resp.data.rows));
+      try {
+        await axios
+          .get("https://www.desopixel.art/api/v1/get-rows")
+          .then((resp) => setPublicKeys(resp.data.rows));
+      } catch (error) {}
     }
     deneme();
     setTimeout(() => {
-      setStatus(true);
-    }, 300);
+    setStatus(true);
+    }, 1500);
     return () => {
       console.log("cleanup");
     };
