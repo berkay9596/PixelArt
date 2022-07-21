@@ -122,9 +122,9 @@ const LeaderBoard = () => {
     setTimeout(() => {
       setStatus(true);
     }, 100);
-    // return () => {
-    //   console.log("cleanup");
-    // };
+    return () => {
+      console.log("cleanup");
+    };
   }, []);
   useEffect(() => {
     if (status) {
@@ -149,9 +149,9 @@ const LeaderBoard = () => {
       };
       usernameLoop();
     }
-    // return () => {
-    //   console.log("cleanup");
-    // };
+    return () => {
+      console.log("cleanup");
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
@@ -159,9 +159,15 @@ const LeaderBoard = () => {
     if (publicKeyAndCount?.length === profileNames?.length) {
       setShow(true);
     }
+    return () => {
+      console.log("cleanup");
+    };
   }, [publicKeyAndCount, profileNames]);
   useEffect(() => {
     getSingleProfile(token?.publicKey).then((resp) => setLoggedUser(resp));
+    return () => {
+      console.log("cleanup");
+    };
   }, [status]);
   return (
     <>
@@ -279,7 +285,10 @@ const LeaderBoard = () => {
           )}
         </>
       ) : (
-        <div style={{ minHeight: "80vh" }} className="flex justify-center items-center">
+        <div
+          style={{ minHeight: "80vh" }}
+          className="flex justify-center items-center"
+        >
           <h2 className="xl:text-6xl sm:text-4xl">Unauthorized Page 401!</h2>
         </div>
       )}
