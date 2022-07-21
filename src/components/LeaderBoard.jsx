@@ -109,7 +109,7 @@ const LeaderBoard = () => {
   const [show, setShow] = useState(false);
   const count = {};
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
-  const pb = token.publicKey;
+  const pb = token?.publicKey;
   const [loggedUser, setLoggedUser] = useState("");
 
   useEffect(() => {
@@ -161,111 +161,126 @@ const LeaderBoard = () => {
     }
   }, [publicKeyAndCount, profileNames]);
   useEffect(() => {
-    getSingleProfile(token.publicKey).then((resp) => setLoggedUser(resp));
+    getSingleProfile(token?.publicKey).then((resp) => setLoggedUser(resp));
   }, [status]);
   return (
     <>
-      {show ? (
-        <div className="text-white flex flex-col container mx-auto prose board-bg my-12">
-          <h3 className="my-5 board text-center">Leaderboard</h3>
-          <div className="flex items-between mx-6">
-            <div>
-              POS
-              <ul
-                style={{
-                  height: "100%",
-                  justifyContent: "space-around",
-                  marginRight: "0.4rem",
-                }}
-                className="p-0 flex flex-col"
-              >
-                {profileNames?.map((x, index) => {
-                  return (
-                    <li
-                      style={{
-                        borderRight: `3px solid ${colors[index]}`,
-                        padding: "0.2rem",
-                      }}
-                      key={index}
+      {token ? (
+        <>
+          {show ? (
+            <div className="text-white flex flex-col container mx-auto prose board-bg my-12">
+              <h3 className="my-5 board text-center">Leaderboard</h3>
+              <div className="flex items-between mx-6">
+                <div>
+                  POS
+                  <ul
+                    style={{
+                      height: "100%",
+                      justifyContent: "space-around",
+                      marginRight: "0.4rem",
+                    }}
+                    className="p-0 flex flex-col"
+                  >
+                    {profileNames?.map((x, index) => {
+                      return (
+                        <li
+                          style={{
+                            borderRight: `3px solid ${colors[index]}`,
+                            padding: "0.2rem",
+                          }}
+                          key={index}
+                        >
+                          {index + 1}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+                <div className="mx-5">
+                  <span className="mx-14">USER</span>
+                  <ul
+                    style={{
+                      height: "100%",
+                      justifyContent: "space-around",
+                      display: "flex",
+                      flexDirection: "column",
+                    }}
+                  >
+                    {profileNames.map((x, index) => (
+                      <li
+                        className="flex items-center"
+                        key={index}
+                        style={x == loggedUser ? { color: "lime" } : {}}
+                      >
+                        {
+                          <img
+                            className="w-7 h-7"
+                            src={`https://node.deso.org/api/v0/get-single-profile-picture/${publicKeyAndCount[index][0]}`}
+                            alt="profile"
+                          />
+                        }
+                        <span value="" className="mx-3">
+                          {x}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div
+                  style={{ marginLeft: "auto" }}
+                  className="items-between flex"
+                >
+                  <div>
+                    COUNT
+                    <ul
+                      style={{ height: "100%", justifyContent: "space-around" }}
+                      className="p-0 flex flex-col"
                     >
-                      {index + 1}
-                    </li>
-                  );
-                })}
-              </ul>
-            </div>
-            <div className="mx-5">
-              <span className="mx-14">USER</span>
-              <ul
+                      {publicKeyAndCount?.map((x, index) => {
+                        return <li key={index}>{x[1]}</li>;
+                      })}
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div
                 style={{
-                  height: "100%",
-                  justifyContent: "space-around",
                   display: "flex",
                   flexDirection: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "2rem",
                 }}
               >
-                {profileNames.map((x, index) => (
-                  <li
-                    className="flex items-center"
-                    key={index}
-                    style={x == loggedUser ? { color: "lime" } : {}}
-                  >
-                    {
-                      <img
-                        className="w-7 h-7"
-                        src={`https://node.deso.org/api/v0/get-single-profile-picture/${publicKeyAndCount[index][0]}`}
-                        alt="profile"
-                      />
-                    }
-                    <span value="" className="mx-3">
-                      {x}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div style={{ marginLeft: "auto" }} className="items-between flex">
-              <div>
-                COUNT
-                <ul
-                  style={{ height: "100%", justifyContent: "space-around" }}
-                  className="p-0 flex flex-col"
+                <span className="my-3 p-1 rounded-lg">
+                  {" "}
+                  Your pixel count : {usersPixelCount}
+                </span>
+                <button
+                  style={{
+                    width: "50%",
+                    display: "flex",
+                    marginBottom: "3rem",
+                  }}
+                  className="btn btn-primary"
+                  onClick={() => {
+                    navigate("/");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
                 >
-                  {publicKeyAndCount?.map((x, index) => {
-                    return <li key={index}>{x[1]}</li>;
-                  })}
-                </ul>
+                  Increse it
+                </button>
               </div>
             </div>
-          </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              marginTop: "2rem",
-            }}
-          >
-            <span className="my-3 p-1 rounded-lg">
-              {" "}
-              Your pixel count : {usersPixelCount}
-            </span>
-            <button
-              style={{ width: "50%", display: "flex", marginBottom: "3rem" }}
-              className="btn btn-primary"
-              onClick={() => {
-                navigate("/");
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }}
-            >
-              Increse it
-            </button>
-          </div>
-        </div>
+          ) : (
+            <div style={{ minHeight: "65vh" }}>
+              <BackdropWithSpinner />
+            </div>
+          )}
+        </>
       ) : (
-        <div style={{ minHeight: "65vh" }}>
-          <BackdropWithSpinner />
+        <div style={{ minHeight: "80vh" }} className="flex justify-center items-center">
+          <h2 className="xl:text-6xl sm:text-4xl">Unauthorized Page 401!</h2>
         </div>
       )}
     </>
