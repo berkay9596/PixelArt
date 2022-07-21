@@ -127,7 +127,7 @@ const LeaderBoard = () => {
     };
   }, []);
   useEffect(() => {
-    if (status) {
+
       setShow(false);
       const a = [...publicKeys];
       a?.map((pk) =>
@@ -148,7 +148,7 @@ const LeaderBoard = () => {
         }
       };
       usernameLoop();
-    }
+
     return () => {
       console.log("cleanup");
     };
