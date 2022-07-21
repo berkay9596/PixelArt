@@ -105,9 +105,11 @@ const LeaderBoard = () => {
   const [publicKeyAndCount, setPubicKeyAndCount] = useState();
   const [status, setStatus] = useState(false);
   const { getSingleProfile } = useContext(DesoContext);
+  const [usersPixelCount, setUsersPixelCount] = useState(0);
   const [show, setShow] = useState(false);
   const count = {};
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
+  const pb = token.publicKey;
   const [loggedUser, setLoggedUser] = useState("");
 
   useEffect(() => {
@@ -136,6 +138,7 @@ const LeaderBoard = () => {
         count[element] = (count[element] || 0) + 1;
       });
       const denem = Object.entries(count).sort((a, b) => b[1] - a[1]);
+      denem.map((x) => x[0] === pb && setUsersPixelCount(x[1]));
       setPubicKeyAndCount(denem);
       const usernameLoop = async () => {
         for (const item of denem) {
@@ -244,7 +247,10 @@ const LeaderBoard = () => {
               marginTop: "2rem",
             }}
           >
-            <span className="my-3 p-1 rounded-lg"> Your pixel count : 2</span>
+            <span className="my-3 p-1 rounded-lg">
+              {" "}
+              Your pixel count : {usersPixelCount}
+            </span>
             <button
               style={{ width: "50%", display: "flex", marginBottom: "3rem" }}
               className="btn btn-primary"
