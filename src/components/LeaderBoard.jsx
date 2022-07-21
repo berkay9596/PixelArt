@@ -107,6 +107,8 @@ const LeaderBoard = () => {
   const { getSingleProfile } = useContext(DesoContext);
   const [show, setShow] = useState(false);
   const count = {};
+  const token = JSON.parse(localStorage.getItem("identityUsersV2"));
+  const [loggedUser, setLoggedUser] = useState("");
   useEffect(() => {
     async function deneme() {
       try {
@@ -114,6 +116,11 @@ const LeaderBoard = () => {
           .get("https://www.desopixel.art/api/v1/get-rows")
           .then((resp) => setPublicKeys(resp.data.rows));
       } catch (error) {}
+    }
+    try {
+      getSingleProfile(token?.publicKey).then((resp) => setLoggedUser(resp));
+    } catch (error) {
+      console.log(error);
     }
     deneme();
     setTimeout(() => {
@@ -148,13 +155,14 @@ const LeaderBoard = () => {
     return () => {
       console.log("cleanup");
     };
-   // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
   useEffect(() => {
     if (publicKeyAndCount?.length === profileNames?.length) {
       setShow(true);
     }
   }, [publicKeyAndCount, profileNames]);
+
   return (
     <>
       {show ? (
@@ -197,7 +205,14 @@ const LeaderBoard = () => {
                 }}
               >
                 {profileNames?.map((x, index) => (
-                  <li className="flex items-center" key={index}>
+                  <li
+                    onClick={() => console.log("clicked item", x)}
+                    className="flex items-center"
+                    key={index}
+                    style={{
+                      color: `${x[index] !== loggedUser ? "greenyellow" : ""}`,
+                    }}
+                  >
                     {
                       <img
                         className="w-7 h-7"
