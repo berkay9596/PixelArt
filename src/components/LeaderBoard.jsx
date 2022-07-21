@@ -116,6 +116,7 @@ const LeaderBoard = () => {
                         borderRight: `3px solid ${colors[index]}`,
                         padding: "0.2rem",
                       }}
+                      key={index}
                     >
                       {index + 1}
                     </li>
