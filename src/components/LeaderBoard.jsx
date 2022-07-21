@@ -132,7 +132,7 @@ const LeaderBoard = () => {
                 }}
               >
                 {profileNames?.map((x, index) => (
-                  <li className="flex items-center">
+                  <li className="flex items-center" key={index}>
                     {
                       <img
                         className="w-7 h-7"
