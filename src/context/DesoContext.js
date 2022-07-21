@@ -3,9 +3,11 @@ import React from "react";
 import { toast } from "react-toastify";
 import DesoApi from "../libs/desoApi";
 import DesoIdentity from "../libs/desoIdentity";
+import { useNavigate } from "react-router-dom";
 const DesoContext = createContext();
 
 export function DesoProvider({ children }) {
+  const navigate= useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [desoIdentity, setDesoIdentity] = useState(null);
   const [desoApi, setDesoApi] = useState(null);
@@ -27,7 +29,8 @@ export function DesoProvider({ children }) {
   const desoLogout = async () => {
     localStorage.removeItem("identityUsersV2");
     setIsLoggedIn(false);
-    window.location.reload();
+    // window.location.reload();
+    navigate("/")
   };
   const sendDeso = async (publicKey, amount) => {
     let createSend = await desoApi?.sendDeso(publicKey, 1000000 * amount);
