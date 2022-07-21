@@ -59,7 +59,7 @@ const LeaderBoard = () => {
     }
     deneme();
     setTimeout(() => {
-    setStatus(true);
+      setStatus(true);
     }, 1500);
     return () => {
       console.log("cleanup");
@@ -86,13 +86,16 @@ const LeaderBoard = () => {
         }
       };
       usernameLoop();
-      setShow(true);
     }
     return () => {
       console.log("cleanup");
     };
   }, [status]);
-
+  useEffect(() => {
+    if (publicKeyAndCount?.length === profileNames?.length) {
+      setShow(true);
+    }
+  }, [publicKeyAndCount, profileNames]);
   return (
     <>
       {show ? (
@@ -157,11 +160,9 @@ const LeaderBoard = () => {
                   style={{ height: "100%", justifyContent: "space-around" }}
                   className="p-0 flex flex-col"
                 >
-                  {profileNames.length === publicKeyAndCount.length
-                    ? publicKeyAndCount?.map((x, index) => {
+                  {publicKeyAndCount?.map((x, index) => {
                         return <li key={index}>{x[1]}</li>;
-                      })
-                    : ""}
+                      })}
                 </ul>
               </div>
             </div>
