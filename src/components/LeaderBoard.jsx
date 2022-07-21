@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DesoContext from "../context/DesoContext";
 import axios from "axios";
 import BackdropWithSpinner from "./BackdropWithSpinner";
-import { toast } from "react-toastify";
+
 const LeaderBoard = () => {
   const colors = [
     "white",
@@ -15,8 +15,12 @@ const LeaderBoard = () => {
     "green",
     "cyan",
     "rebeccapurple",
-    "pink",
-    "wheat",
+    "amber",
+    "fuchsia",
+    "teal",
+    "emerald",
+    "rose",
+    "sky",
     "white",
     "red",
     "yellow",
@@ -26,8 +30,12 @@ const LeaderBoard = () => {
     "green",
     "cyan",
     "rebeccapurple",
-    "pink",
-    "wheat",
+    "amber",
+    "fuchsia",
+    "teal",
+    "emerald",
+    "rose",
+    "sky",
     "white",
     "red",
     "yellow",
@@ -37,9 +45,59 @@ const LeaderBoard = () => {
     "green",
     "cyan",
     "rebeccapurple",
-    "pink",
-    "wheat",
+    "amber",
+    "fuchsia",
+    "teal",
+    "emerald",
+    "rose",
+    "sky",
+    "white",
+    "red",
+    "yellow",
+    "purple",
+    "lime",
+    "blue",
+    "green",
+    "cyan",
+    "rebeccapurple",
+    "amber",
+    "fuchsia",
+    "teal",
+    "emerald",
+    "rose",
+    "sky",
+    "white",
+    "red",
+    "yellow",
+    "purple",
+    "lime",
+    "blue",
+    "green",
+    "cyan",
+    "rebeccapurple",
+    "amber",
+    "fuchsia",
+    "teal",
+    "emerald",
+    "rose",
+    "sky",
+    "white",
+    "red",
+    "yellow",
+    "purple",
+    "lime",
+    "blue",
+    "green",
+    "cyan",
+    "rebeccapurple",
+    "amber",
+    "fuchsia",
+    "teal",
+    "emerald",
+    "rose",
+    "sky",
   ];
+
   const navigate = useNavigate();
   const [publicKeys, setPublicKeys] = useState([]);
   const [publicKeys2, setPublicKeys2] = useState([]);
@@ -90,6 +148,7 @@ const LeaderBoard = () => {
     return () => {
       console.log("cleanup");
     };
+   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
   useEffect(() => {
     if (publicKeyAndCount?.length === profileNames?.length) {
@@ -161,8 +220,8 @@ const LeaderBoard = () => {
                   className="p-0 flex flex-col"
                 >
                   {publicKeyAndCount?.map((x, index) => {
-                        return <li key={index}>{x[1]}</li>;
-                      })}
+                    return <li key={index}>{x[1]}</li>;
+                  })}
                 </ul>
               </div>
             </div>
