@@ -59,6 +59,9 @@ const LeaderBoard = () => {
     setTimeout(() => {
       setStatus(true);
     }, 300);
+    return () => {
+      console.log("cleanup");
+    };
   }, []);
   useEffect(() => {
     if (status) {
@@ -83,7 +86,11 @@ const LeaderBoard = () => {
       usernameLoop();
       setShow(true);
     }
+    return () => {
+      console.log("cleanup");
+    };
   }, [status]);
+
   return (
     <>
       {show ? (
