@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DesoContext from "../context/DesoContext";
 import axios from "axios";
 import BackdropWithSpinner from "./BackdropWithSpinner";
+import { toast } from "react-toastify";
 const LeaderBoard = () => {
   const colors = [
     "white",
@@ -57,29 +58,31 @@ const LeaderBoard = () => {
     deneme();
     setTimeout(() => {
       setStatus(true);
-    }, 400);
+    }, 300);
   }, []);
   useEffect(() => {
-    setShow(false);
-    const a = [...publicKeys];
-    a?.map((pk) => pk?.map((p) => p !== "" && publicKeys2.push(p.slice(-55))));
-    const b = [...publicKeys2];
-    b?.forEach((element) => {
-      count[element] = (count[element] || 0) + 1;
-    });
-    const denem = Object.entries(count).sort((a, b) => b[1] - a[1]);
-    setPubicKeyAndCount(denem);
-    const usernameLoop = async () => {
-      for (const item of denem) {
-        const username = await getSingleProfile(item[0]);
-        const all = Promise.all([username]);
-        all.then((v) => setProfileNames((prev) => [...prev, v]));
-      }
-    };
-    usernameLoop();
-    setTimeout(() => {
+    if (status) {
+      setShow(false);
+      const a = [...publicKeys];
+      a?.map((pk) =>
+        pk?.map((p) => p !== "" && publicKeys2.push(p.slice(-55)))
+      );
+      const b = [...publicKeys2];
+      b?.forEach((element) => {
+        count[element] = (count[element] || 0) + 1;
+      });
+      const denem = Object.entries(count).sort((a, b) => b[1] - a[1]);
+      setPubicKeyAndCount(denem);
+      const usernameLoop = async () => {
+        for (const item of denem) {
+          const username = await getSingleProfile(item[0]);
+          const all = Promise.all([username]);
+          all.then((v) => setProfileNames((prev) => [...prev, v]));
+        }
+      };
+      usernameLoop();
       setShow(true);
-    }, 7000);
+    }
   }, [status]);
   return (
     <>
@@ -97,7 +100,7 @@ const LeaderBoard = () => {
                 }}
                 className="p-0 flex flex-col"
               >
-                {publicKeyAndCount?.map((x, index) => {
+                {profileNames?.map((x, index) => {
                   return (
                     <li
                       style={{
@@ -144,9 +147,11 @@ const LeaderBoard = () => {
                   style={{ height: "100%", justifyContent: "space-around" }}
                   className="p-0 flex flex-col"
                 >
-                  {publicKeyAndCount?.map((x) => {
-                    return <li>{x[1]}</li>;
-                  })}
+                  {profileNames.length === publicKeyAndCount.length
+                    ? publicKeyAndCount?.map((x, index) => {
+                        return <li key={index}>{x[1]}</li>;
+                      })
+                    : ""}
                 </ul>
               </div>
             </div>
