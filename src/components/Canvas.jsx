@@ -43,9 +43,9 @@ function Canvas() {
   const [socketChange, setSocketChange] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(0);
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
-  const { sendDeso, getSingleProfile, isLoggedIn } = useContext(DesoContext);
+  const { sendDeso, getSingleProfile} = useContext(DesoContext);
   const fillColor = (rowIndex, colIndex) => {
-    if (isLoggedIn) {
+    if (token) {
       getRowsFromApiToComparison();
       if (rowsCompare.length !== 0) {
         let newGrid = [...rows];
