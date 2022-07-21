@@ -109,26 +109,20 @@ const LeaderBoard = () => {
   const count = {};
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
   const [loggedUser, setLoggedUser] = useState("");
+
   useEffect(() => {
     async function deneme() {
-      try {
-        await axios
-          .get("https://www.desopixel.art/api/v1/get-rows")
-          .then((resp) => setPublicKeys(resp.data.rows));
-      } catch (error) {}
-    }
-    try {
-      getSingleProfile(token?.publicKey).then((resp) => setLoggedUser(resp));
-    } catch (error) {
-      console.log(error);
+      await axios
+        .get("https://www.desopixel.art/api/v1/get-rows")
+        .then((resp) => setPublicKeys(resp.data.rows));
     }
     deneme();
     setTimeout(() => {
       setStatus(true);
     }, 1500);
-    return () => {
-      console.log("cleanup");
-    };
+    // return () => {
+    //   console.log("cleanup");
+    // };
   }, []);
   useEffect(() => {
     if (status) {
@@ -152,17 +146,20 @@ const LeaderBoard = () => {
       };
       usernameLoop();
     }
-    return () => {
-      console.log("cleanup");
-    };
+    // return () => {
+    //   console.log("cleanup");
+    // };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
+
   useEffect(() => {
     if (publicKeyAndCount?.length === profileNames?.length) {
       setShow(true);
     }
   }, [publicKeyAndCount, profileNames]);
-
+  useEffect(() => {
+    getSingleProfile(token.publicKey).then((resp) => setLoggedUser(resp));
+  }, [status]);
   return (
     <>
       {show ? (
@@ -204,14 +201,11 @@ const LeaderBoard = () => {
                   flexDirection: "column",
                 }}
               >
-                {profileNames?.map((x, index) => (
+                {profileNames.map((x, index) => (
                   <li
-                    onClick={() => console.log("clicked item", x)}
                     className="flex items-center"
                     key={index}
-                    style={{
-                      color: `${x[index] !== loggedUser ? "greenyellow" : ""}`,
-                    }}
+                    style={x == loggedUser ? { color: "lime" } : {}}
                   >
                     {
                       <img
