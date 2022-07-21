@@ -43,28 +43,29 @@ function Canvas() {
   const [socketChange, setSocketChange] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(0);
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
-  const { sendDeso, getSingleProfile,isLoggedIn } =
-    useContext(DesoContext);
+  const { sendDeso, getSingleProfile, isLoggedIn } = useContext(DesoContext);
   const fillColor = (rowIndex, colIndex) => {
-  if(isLoggedIn){
-    getRowsFromApiToComparison();
-    if (rowsCompare.length !== 0) {
-      let newGrid = [...rows];
-      if (rowsCompare[rowIndex][colIndex] !== "") {
-        toast.error("This pixel has signed into the system.");
-      } else if (deleteButtonActive && newGrid[rowIndex][colIndex] !== "") {
-        newGrid[rowIndex][colIndex] = "";
-        setCount((prev) => prev - 1);
-      } else if (deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
-        newGrid[rowIndex][colIndex] = "";
-      } else if (!deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
-        newGrid[rowIndex][colIndex] = `${currentSelectedColor} ${token.publicKey}`;
-        setCount((prev) => prev + 1);
+    if (isLoggedIn) {
+      getRowsFromApiToComparison();
+      if (rowsCompare.length !== 0) {
+        let newGrid = [...rows];
+        if (rowsCompare[rowIndex][colIndex] !== "") {
+          toast.error("This pixel has signed into the system.");
+        } else if (deleteButtonActive && newGrid[rowIndex][colIndex] !== "") {
+          newGrid[rowIndex][colIndex] = "";
+          setCount((prev) => prev - 1);
+        } else if (deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
+          newGrid[rowIndex][colIndex] = "";
+        } else if (!deleteButtonActive && newGrid[rowIndex][colIndex] === "") {
+          newGrid[rowIndex][
+            colIndex
+          ] = `${currentSelectedColor} ${token.publicKey}`;
+          setCount((prev) => prev + 1);
+        }
       }
+    } else {
+      toast.error("You need to login first.");
     }
-  }else{
-    toast.error("You need to login first.")
-  }
   };
 
   const getRowsFromApi = async () => {
@@ -218,17 +219,17 @@ function Canvas() {
                 //   key={colIndex}
                 //   disableFocusListener
                 // >
-                  <div
+                <div
                   key={colIndex}
-                    onClick={() => {
-                      fillColor(rowIndex, colIndex);
-                    }}
-                    className={`pixel
+                  onClick={() => {
+                    fillColor(rowIndex, colIndex);
+                  }}
+                  className={`pixel
                 w-3  md:w-7 sm:w-5 
                 h-3   md:h-7 sm:h-5 transition-all cursor-pointer ${
                   col || "bg-purple-200"
                 }`}
-                  ></div>
+                ></div>
                 // </Tooltip>
               ))}
             </div>
@@ -237,7 +238,10 @@ function Canvas() {
 
         <div className="flex items-center justify-center flex-col flex-wrap">
           <div className="py-2 my-2">
-            <p style={{ background: "deeppink" }} className="flex flex-col p-1 rounded-lg max-w-xs min-w-max">
+            <p
+              style={{ background: "deeppink" }}
+              className="flex flex-col p-1 rounded-lg max-w-xs min-w-max"
+            >
               Total Selected Pixels <span> {count}</span>
             </p>
           </div>
@@ -286,8 +290,6 @@ function Canvas() {
                 } else {
                   toast.error("You can't submit without selecting any pixel.");
                 }
-              } else {
-                toast.error("You need to login first.");
               }
             }}
             id="submit"
