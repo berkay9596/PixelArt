@@ -121,7 +121,7 @@ const LeaderBoard = () => {
     deneme();
     setTimeout(() => {
       setStatus(true);
-    }, 100);
+    }, 400);
     return () => {
       console.log("cleanup");
     };
