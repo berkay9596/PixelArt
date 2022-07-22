@@ -151,9 +151,12 @@ const LeaderBoard = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
-console.log("show",show)
+  console.log("show", show);
   useEffect(() => {
-    if (publicKeyAndCount?.length === profileNames?.length) {
+    if (
+      publicKeyAndCount?.length === profileNames?.length &&
+      publicKeyAndCount.length > 0
+    ) {
       setShow(true);
     }
     return () => {
@@ -167,7 +170,7 @@ console.log("show",show)
     };
   }, [status]);
   return (
-    <div style={{minHeight:"65vh"}}>
+    <div style={{ minHeight: "65vh" }}>
       {token ? (
         <>
           {show ? (
