@@ -167,7 +167,7 @@ console.log("show",show)
     };
   }, [status]);
   return (
-    <>
+    <div style={{minHeight:"65vh"}}>
       {token ? (
         <>
           {show ? (
@@ -289,7 +289,7 @@ console.log("show",show)
           <h2 className="xl:text-6xl sm:text-4xl">Unauthorized Page 401!</h2>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
