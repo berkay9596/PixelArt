@@ -178,7 +178,10 @@ const LeaderBoard = () => {
               <h3 className="my-5 board text-center">Leaderboard</h3>
               <div className="flex items-between mx-6">
                 <div>
-                  POS
+                  <span style={{ marginLeft: "3px" }} className="relative">
+                    {" "}
+                    POS
+                  </span>
                   <ul
                     style={{
                       height: "100%",
@@ -203,7 +206,7 @@ const LeaderBoard = () => {
                   </ul>
                 </div>
                 <div className="mx-5">
-                  <span className="mx-14">USER</span>
+                  <span className="mx-20">USER</span>
                   <ul
                     style={{
                       height: "100%",
@@ -237,7 +240,7 @@ const LeaderBoard = () => {
                   className="items-between flex"
                 >
                   <div>
-                    COUNT
+                    <span style={{ right: "5px" }} className="relative"> COUNT</span>
                     <ul
                       style={{ height: "100%", justifyContent: "space-around" }}
                       className="p-0 flex flex-col"
