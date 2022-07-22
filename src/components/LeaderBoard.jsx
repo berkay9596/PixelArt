@@ -121,40 +121,37 @@ const LeaderBoard = () => {
     deneme();
     setTimeout(() => {
       setStatus(true);
-    }, 400);
+    }, 250);
     return () => {
       console.log("cleanup");
     };
   }, []);
   useEffect(() => {
-
-      setShow(false);
-      const a = [...publicKeys];
-      a?.map((pk) =>
-        pk?.map((p) => p !== "" && publicKeys2.push(p.slice(-55)))
-      );
-      const b = [...publicKeys2];
-      b?.forEach((element) => {
-        count[element] = (count[element] || 0) + 1;
-      });
-      const denem = Object.entries(count).sort((a, b) => b[1] - a[1]);
-      denem.map((x) => x[0] === pb && setUsersPixelCount(x[1]));
-      setPubicKeyAndCount(denem);
-      const usernameLoop = async () => {
-        for (const item of denem) {
-          const username = await getSingleProfile(item[0]);
-          const all = Promise.all([username]);
-          all.then((v) => setProfileNames((prev) => [...prev, v]));
-        }
-      };
-      usernameLoop();
+    setShow(false);
+    const a = [...publicKeys];
+    a?.map((pk) => pk?.map((p) => p !== "" && publicKeys2.push(p.slice(-55))));
+    const b = [...publicKeys2];
+    b?.forEach((element) => {
+      count[element] = (count[element] || 0) + 1;
+    });
+    const denem = Object.entries(count).sort((a, b) => b[1] - a[1]);
+    denem.map((x) => x[0] === pb && setUsersPixelCount(x[1]));
+    setPubicKeyAndCount(denem);
+    const usernameLoop = async () => {
+      for (const item of denem) {
+        const username = await getSingleProfile(item[0]);
+        const all = Promise.all([username]);
+        all.then((v) => setProfileNames((prev) => [...prev, v]));
+      }
+    };
+    usernameLoop();
 
     return () => {
       console.log("cleanup");
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
-
+console.log("show",show)
   useEffect(() => {
     if (publicKeyAndCount?.length === profileNames?.length) {
       setShow(true);
