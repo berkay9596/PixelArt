@@ -253,7 +253,7 @@ function Canvas() {
             class="grid overflow-hidden grid-cols-2 gap-2 py-2 my-2"
           >
             <p
-              style={{ background: "#d39c36", height: "3.5rem" }}
+              style={{ background: "#f8a60d", height: "3.5rem" }}
               className="flex flex-col p-1 rounded-lg max-w-xs min-w-max box"
             >
               Total Selected Pixels <span> {count}</span>
@@ -263,10 +263,10 @@ function Canvas() {
                 setDeleteButtonActive(true);
                 setCurrentSelectedColor();
               }}
-              className="btn btn-error box"
+              className="btn btn-error"
               style={{
                 border: deleteButtonActive ? "4px solid lime" : "none",
-                background: deleteButtonActive ? "white" : "",
+                background: deleteButtonActive ? "white" : "#f000b8",
                 minHeight: "3.5rem",
                 maxHeight: "3.5rem",
               }}
