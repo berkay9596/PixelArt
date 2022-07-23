@@ -184,8 +184,9 @@ function Canvas() {
           <div className="modal">
             <div className="modal-box flex items-center flex-col bg-black">
               <h3 className="font-bold text-lg">
-                You are about to own a pixel at Desopixelart
+                You are about to own pixel at Desopixelart
               </h3>
+              <p className="py-3">Total Pixel : {count}</p>
               <p className="py-3">Total Price : {count / 10} Deso</p>
               <p className="py-3">Do you confirm the transaction?</p>
               <div className="modal-action">
