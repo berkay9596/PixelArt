@@ -223,7 +223,7 @@ const LeaderBoard = () => {
                       >
                         {
                           <img
-                            className="w-7 h-7"
+                            className="w-7 h-7 rounded-full"
                             src={`https://node.deso.org/api/v0/get-single-profile-picture/${publicKeyAndCount[index][0]}`}
                             alt="profile"
                           />
@@ -240,7 +240,10 @@ const LeaderBoard = () => {
                   className="items-between flex"
                 >
                   <div>
-                    <span style={{ right: "5px" }} className="relative"> COUNT</span>
+                    <span style={{ right: "5px" }} className="relative">
+                      {" "}
+                      COUNT
+                    </span>
                     <ul
                       style={{ height: "100%", justifyContent: "space-around" }}
                       className="p-0 flex flex-col"
