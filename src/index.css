@@ -22,7 +22,10 @@ body {
   /* background-color: black; */
 }
 
-h1,
+h1 {
+  color: white !important;
+}
+
 h2,
 h3,
 h4,

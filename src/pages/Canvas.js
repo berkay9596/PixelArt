@@ -241,10 +241,19 @@ function Canvas() {
         </div>
 
         <div className="flex items-center justify-center flex-col flex-wrap">
-          <div className="py-2 my-2 flex gap-5">
+          {/* <div className=" py-2 my-2 grid items-center justify-center gap-5"> */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: "1rem",
+              padding: "1rem",
+            }}
+            class="grid overflow-hidden grid-cols-2 gap-2 py-2 my-2"
+          >
             <p
               style={{ background: "deeppink", height: "3.5rem" }}
-              className="flex flex-col p-1 rounded-lg max-w-xs min-w-max"
+              className="flex flex-col p-1 rounded-lg max-w-xs min-w-max box"
             >
               Total Selected Pixels <span> {count}</span>
             </p>
@@ -253,11 +262,12 @@ function Canvas() {
                 setDeleteButtonActive(true);
                 setCurrentSelectedColor();
               }}
-              className="btn btn-error"
+              className="btn btn-error box"
               style={{
-                border: deleteButtonActive ? "4px solid green" : "none",
+                border: deleteButtonActive ? "4px solid lime" : "none",
                 background: deleteButtonActive ? "white" : "",
-                height: "3.5rem",
+                minHeight: "3.5rem",
+                maxHeight: "3.5rem",
               }}
             >
               <img src={eraser} className="w-10 mx-2" alt="delete button" />
