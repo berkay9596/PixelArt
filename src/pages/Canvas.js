@@ -331,7 +331,7 @@ function Canvas() {
             Submit to system
           </button>
         </div>
-        <article style={{lineHeight:"2.5rem"}} className="prose mx-auto container">
+        <article style={{lineHeight:"2rem"}} className="prose mx-auto container">
           <h2> Collaborative pixel painting</h2>
           <p style={{padding: "0 1.5rem 0 1.5rem"}}>
             DESOPIXELART is the first ever collectible, collaborative pixel
