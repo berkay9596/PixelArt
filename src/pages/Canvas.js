@@ -366,25 +366,25 @@ function Canvas() {
 
           <ul className="steps steps-vertical lg:steps-horizontal mx-2 p-0">
             <li className="step step-success ">
-              <span className="mx-5">
+              <span className="mx-0 lg:mx-5 ml-2">
                 Paint any pixels you want on any available canvas.
               </span>
             </li>
             <li className="step step-success ">
-              <span className="mx-4">
+              <span className="mx-0 lg:mx-4 mr-2">
                 {" "}
                 The more you paint, the bigger share of the painting you get.
               </span>
             </li>
             <li className="step step-success ">
-              <span className="mx-1">
+              <span className="mx-0 lg:mx-1 mr-12">
                 {" "}
                 After all pixels are set, the canvas is put up for auction.
                 Anyone can make a bid.
               </span>
             </li>
             <li className="step step-success ">
-              <span className="mx-4">
+              <span className="mx-0 lg:mx-4">
                 {" "}
                 85% of the winning bid from auction is distributed to the
                 painters.
