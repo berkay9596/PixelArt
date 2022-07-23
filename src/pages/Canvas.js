@@ -241,7 +241,7 @@ function Canvas() {
           ))}
         </div>
 
-        <div className="flex items-center justify-center flex-col flex-wrap">
+        <div className="flex items-center justify-center flex-col flex-wrap mb-6">
           {/* <div className=" py-2 my-2 grid items-center justify-center gap-5"> */}
           <div
             style={{
