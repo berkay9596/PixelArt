@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import DesoContext from "../context/DesoContext";
 import axios from "axios";
-import BackdropWithSpinner from "./BackdropWithSpinner";
+import BackdropWithSpinner from "../components/BackdropWithSpinner";
 
 const LeaderBoard = () => {
   const colors = [

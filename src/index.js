@@ -4,7 +4,7 @@ import "./index.css";
 import App from "./App";
 import { DesoProvider } from "./context/DesoContext";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import LeaderBoard from "./components/LeaderBoard";
+import LeaderBoard from "./pages/LeaderBoard";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 const root = ReactDOM.createRoot(document.getElementById("root"));

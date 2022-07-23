@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { toast } from "react-toastify";
-import Confetti from "./Confetti";
+import Confetti from "../components/Confetti";
 import eraser from "../images/eraser.svg";
-import BackdropWithSpinner from "./BackdropWithSpinner";
+import BackdropWithSpinner from "../components/BackdropWithSpinner";
 // import io from "socket.io-client";
 import { useContext } from "react";
 import DesoContext from "../context/DesoContext";

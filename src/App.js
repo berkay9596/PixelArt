@@ -1,4 +1,4 @@
-import Canvas from "./components/Canvas";
+import Canvas from "./pages/Canvas";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
