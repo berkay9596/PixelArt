@@ -269,10 +269,10 @@ const LeaderBoard = () => {
                     {" "}
                     Your pixel count : <span style={{color:"lime"}}>{usersPixelCount}</span>
                   </span>{" "}
-                  <span>
+                  <span className="px-8">
                     {" "}
                     When the completed artwork is sold, you will have{" "}
-                    <span style={{color:"lime"}}> {(usersPixelCount / 625) * 100}%</span> of the share.
+                    <span style={{color:"lime"}}> {((usersPixelCount / 625) * 100).toFixed(2)}%</span> of the share.
                   </span>
                 </div>
                 <button
