@@ -253,7 +253,7 @@ function Canvas() {
             class="grid overflow-hidden grid-cols-2 gap-2 py-2 my-2"
           >
             <p
-              style={{ background: "deeppink", height: "3.5rem" }}
+              style={{ background: "#d39c36", height: "3.5rem" }}
               className="flex flex-col p-1 rounded-lg max-w-xs min-w-max box"
             >
               Total Selected Pixels <span> {count}</span>
