@@ -264,10 +264,17 @@ const LeaderBoard = () => {
                   marginTop: "2rem",
                 }}
               >
-                <span className="my-3 p-1 rounded-lg">
-                  {" "}
-                  Your pixel count : {usersPixelCount}
-                </span>
+                <div className="flex flex-col items-center justify-center mb-3">
+                  <span className="my-3 p-1 rounded-lg">
+                    {" "}
+                    Your pixel count : <span style={{color:"lime"}}>{usersPixelCount}</span>
+                  </span>{" "}
+                  <span>
+                    {" "}
+                    When the completed artwork is sold, you will have{" "}
+                    <span style={{color:"lime"}}> {(usersPixelCount / 625) * 100}%</span> of the share.
+                  </span>
+                </div>
                 <button
                   style={{
                     width: "50%",
