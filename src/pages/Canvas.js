@@ -345,17 +345,16 @@ function Canvas() {
 
           <h3>Earn by contributing</h3>
           <p>
-            By contributing to the artwork you are not only digitally signing
-            your address to each and every pixel you paint onto the blockchain
-            for eternity - you are also entitled to a percentage of the proceeds
+            By contributing to the artwork you are not only signing your pixels
+            to the system. You are also entitled to a percentage of the proceeds
             from the auction of the final piece as well as a portion of every
             sale afterwards.
           </p>
 
           <p>
-            When the completed canvas is auctioned: 96.1% of auction proceeds
-            will be distributed amongst contributors. Every sale of the canvas
-            afterwards: 6.1% of sale proceeds will be distributed amongst
+            When the completed canvas is auctioned: 85% of auction proceeds will
+            be distributed amongst contributors. Every sale of the canvas
+            afterwards: 5% of sale proceeds will be distributed amongst
             contributors.
           </p>
 
@@ -381,7 +380,7 @@ function Canvas() {
             <li className="step step-success ">
               <span className="mx-4">
                 {" "}
-                96.1% of the winning bid from auction is distributed to the
+                85% of the winning bid from auction is distributed to the
                 painters.
               </span>
             </li>
