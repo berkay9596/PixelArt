@@ -43,14 +43,18 @@ function Canvas() {
   const [socketChange, setSocketChange] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(0);
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
-  const { sendDeso, getSingleProfile} = useContext(DesoContext);
-  const fillColor = (rowIndex, colIndex) => {
+  const { sendDeso, getSingleProfile } = useContext(DesoContext);
+
+  const fillColor = async (rowIndex, colIndex) => {
     if (token) {
       getRowsFromApiToComparison();
       if (rowsCompare.length !== 0) {
         let newGrid = [...rows];
         if (rowsCompare[rowIndex][colIndex] !== "") {
-          toast.error("This pixel has signed into the system.");
+          const profile = await getSingleProfile(
+            rowsCompare[rowIndex][colIndex].slice(-55)
+          );
+          toast.error(`This pixel has signed into the system. by ${profile}`);
         } else if (deleteButtonActive && newGrid[rowIndex][colIndex] !== "") {
           newGrid[rowIndex][colIndex] = "";
           setCount((prev) => prev - 1);

@@ -7,11 +7,12 @@ import { useNavigate } from "react-router-dom";
 const DesoContext = createContext();
 
 export function DesoProvider({ children }) {
-  const navigate= useNavigate();
+  const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [desoIdentity, setDesoIdentity] = useState(null);
   const [desoApi, setDesoApi] = useState(null);
   const [publicKey, setPublicKey] = useState(null);
+  
   useEffect(() => {
     const di = new DesoIdentity();
     setDesoIdentity(di);
@@ -30,7 +31,7 @@ export function DesoProvider({ children }) {
     localStorage.removeItem("identityUsersV2");
     setIsLoggedIn(false);
     // window.location.reload();
-    navigate("/")
+    navigate("/");
   };
   const sendDeso = async (publicKey, amount) => {
     let createSend = await desoApi?.sendDeso(publicKey, 1000000 * amount);
@@ -46,7 +47,7 @@ export function DesoProvider({ children }) {
     return username;
   };
 
-return (
+  return (
     <DesoContext.Provider
       value={{
         isLoggedIn,
