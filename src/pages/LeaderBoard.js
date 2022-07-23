@@ -264,7 +264,7 @@ const LeaderBoard = () => {
                   marginTop: "2rem",
                 }}
               >
-                <div className="flex flex-col items-center justify-center mb-3">
+                <div className="flex flex-col items-center justify-center mb-3 p-4">
                   <span className="my-3 p-1 rounded-lg">
                     {" "}
                     Your pixel count : <span style={{color:"lime"}}>{usersPixelCount}</span>
