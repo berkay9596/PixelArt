@@ -241,13 +241,30 @@ function Canvas() {
         </div>
 
         <div className="flex items-center justify-center flex-col flex-wrap">
-          <div className="py-2 my-2">
+          <div className="py-2 my-2 flex gap-5">
             <p
-              style={{ background: "deeppink" }}
+              style={{ background: "deeppink", height: "3.5rem" }}
               className="flex flex-col p-1 rounded-lg max-w-xs min-w-max"
             >
               Total Selected Pixels <span> {count}</span>
             </p>
+            <button
+              onClick={() => {
+                setDeleteButtonActive(true);
+                setCurrentSelectedColor();
+              }}
+              className="btn btn-error"
+              style={{
+                border: deleteButtonActive ? "4px solid green" : "none",
+                background: deleteButtonActive ? "white" : "",
+                height: "3.5rem",
+              }}
+            >
+              <img src={eraser} className="w-10 mx-2" alt="delete button" />
+              <span style={{ color: deleteButtonActive ? "black" : "white" }}>
+                Delete
+              </span>
+            </button>
           </div>
           <div className="flex justify-center gap-1 flex-wrap">
             {colors.map((color, index) => (
@@ -268,7 +285,7 @@ function Canvas() {
             ))}
           </div>
           <div className="py-1 my-2">
-            <button
+            {/* <button
               onClick={() => {
                 setDeleteButtonActive(true);
                 setCurrentSelectedColor();
@@ -283,7 +300,7 @@ function Canvas() {
               <span style={{ color: deleteButtonActive ? "black" : "white" }}>
                 Delete
               </span>
-            </button>
+            </button> */}
           </div>
 
           <button
@@ -297,7 +314,8 @@ function Canvas() {
               }
             }}
             id="submit"
-            className="btn btn-success"
+            className="btn btn-primary"
+            style={{ color: "white" }}
           >
             Submit to system
           </button>

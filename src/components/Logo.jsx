@@ -8,7 +8,7 @@ const Logo = () => {
         navigate("/");
         window.scrollTo({ top: 0, behavior: "smooth" });
       }}
-      className="cursor-pointer font-black font-['Monoton'] text-zinc-500 text-sm md:text-4xl tracking-widest m-0"
+      className="cursor-pointer font-black font-['Monoton'] text-sm md:text-4xl tracking-widest m-0 art"
     >
       <span className="font-['Monoton'] text-rose-500">D</span>
       <span className="font-['Monoton'] text-amber-500">E</span>
