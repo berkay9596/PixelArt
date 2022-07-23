@@ -151,7 +151,7 @@ const LeaderBoard = () => {
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
-  console.log("show", show);
+
   useEffect(() => {
     if (
       publicKeyAndCount?.length === profileNames?.length &&
