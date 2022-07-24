@@ -30,7 +30,7 @@ const LeaderBoard = () => {
     deneme();
     setTimeout(() => {
       setStatus(true);
-    }, 1500);
+    }, 400);
     return () => {
       console.log("cleanup");
     };
