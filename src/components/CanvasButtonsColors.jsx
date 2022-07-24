@@ -1,7 +1,13 @@
 import eraser from "../images/eraser.svg";
 import { colors } from "../constants/colors";
 import { toast } from "react-toastify";
-function CanvasButtonsColors(props) {
+function CanvasButtonsColors({
+  deleteButtonActive,
+  setDeleteButtonActive,
+  currentSelectedColor,
+  count,
+  setCurrentSelectedColor,
+}) {
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
   return (
     <div className="flex items-center justify-center flex-col flex-wrap mb-12">
@@ -21,17 +27,17 @@ function CanvasButtonsColors(props) {
           }}
           className="flex flex-col p-1 rounded-lg max-w-xs min-w-max box"
         >
-          Total Selected Pixels <span> {props.count}</span>
+          Total Selected Pixels <span> {count}</span>
         </p>
         <button
           onClick={() => {
-            props.setDeleteButtonActive(true);
-            props.setCurrentSelectedColor();
+            setDeleteButtonActive(true);
+            setCurrentSelectedColor();
           }}
           className="btn btn-error"
           style={{
-            border: props.deleteButtonActive ? "4px solid lime" : "none",
-            background: props.deleteButtonActive ? "white" : "#f000b8",
+            border: deleteButtonActive ? "4px solid lime" : "none",
+            background: deleteButtonActive ? "white" : "#f000b8",
             minHeight: "3.5rem",
             maxHeight: "3.5rem",
           }}
@@ -39,7 +45,7 @@ function CanvasButtonsColors(props) {
           <img src={eraser} className="w-10 mx-2" alt="delete button" />
           <span
             style={{
-              color: props.deleteButtonActive ? "black" : "white",
+              color: deleteButtonActive ? "black" : "white",
             }}
           >
             Delete
@@ -51,14 +57,14 @@ function CanvasButtonsColors(props) {
           <button
             key={index}
             onClick={() => {
-              props.setCurrentSelectedColor(color);
-              props.setDeleteButtonActive(false);
+              setCurrentSelectedColor(color);
+              setDeleteButtonActive(false);
             }}
             className={`w-10 h-10 flex items-center justify-center rounded-full ${color}`}
           >
             <div
               className={`${
-                color === props.currentSelectedColor ? "w-8 h-8" : "w-0 h-0"
+                color === currentSelectedColor ? "w-8 h-8" : "w-0 h-0"
               } transition-all bg-zinc-800 rounded-full`}
             />
           </button>
@@ -69,7 +75,7 @@ function CanvasButtonsColors(props) {
       <button
         onClick={() => {
           if (token) {
-            if (props.count > 0) {
+            if (count > 0) {
               document.getElementById("my-modal").checked = true;
             } else {
               toast.error("You can't submit without selecting any pixel.");

@@ -1,4 +1,5 @@
-function Modal(props) {
+import React from "react";
+const Modal = (props) => {
   return (
     <div className="modal">
       <div className="modal-box flex items-center flex-col bg-black">
@@ -23,6 +24,6 @@ function Modal(props) {
       </div>
     </div>
   );
-}
+};
 
 export default Modal;

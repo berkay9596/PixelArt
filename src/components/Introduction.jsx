@@ -1,4 +1,6 @@
-function Introduction() {
+import React from "react";
+
+const Introduction = () => {
   return (
     <article
       style={{
@@ -71,6 +73,6 @@ function Introduction() {
       </ul>
     </article>
   );
-}
+};
 
 export default Introduction;

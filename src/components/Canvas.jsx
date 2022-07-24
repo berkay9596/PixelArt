@@ -1,4 +1,6 @@
-function Canvas(props) {
+import React from "react";
+
+const Canvas = ({ rows, fillColor }) => {
   return (
     <div
       style={{
@@ -6,7 +8,7 @@ function Canvas(props) {
       }}
       className="flex flex-col items-center xl:items-center md:items-center"
     >
-      {props.rows?.map((row, rowIndex) => (
+      {rows?.map((row, rowIndex) => (
         <div
           style={{
             gap: "1px",
@@ -18,7 +20,7 @@ function Canvas(props) {
             <div
               key={colIndex}
               onClick={() => {
-                props.fillColor(rowIndex, colIndex);
+                fillColor(rowIndex, colIndex);
               }}
               className={`pixel
                     w-3  md:w-7 sm:w-5 
@@ -31,6 +33,6 @@ function Canvas(props) {
       ))}
     </div>
   );
-}
+};
 
 export default Canvas;
