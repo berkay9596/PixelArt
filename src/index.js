@@ -13,7 +13,7 @@ root.render(
     <DesoProvider>
       <Navbar />
       <Routes>
-        <Route path="/" element={<App />}/>
+        <Route path="/" element={<App />} />
         <Route path="/leaderboard" element={<LeaderBoard />} />
       </Routes>
       <Footer />
