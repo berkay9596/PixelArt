@@ -25,7 +25,7 @@ const Canvas = ({ rows, fillColor }) => {
               className={`pixel
                     w-3  md:w-7 sm:w-5 
                     h-3   md:h-7 sm:h-5 transition-all cursor-pointer ${
-                      col || "bg-purple-300"
+                      col || "bg-purple-100"
                     }`}
             ></div>
           ))}
