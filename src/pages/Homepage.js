@@ -26,9 +26,10 @@ function Homepage() {
   const [socketChange, setSocketChange] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(0);
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
-  const { 
+  const {
     // sendDeso,
-     getSingleProfile } = useContext(DesoContext);
+    getSingleProfile,
+  } = useContext(DesoContext);
 
   const fillColor = async (rowIndex, colIndex) => {
     if (token) {
@@ -59,8 +60,8 @@ function Homepage() {
 
   const getRowsFromApi = async () => {
     await fetch(
-      // "/api/v1/get-rows",
-      "https://www.desopixel.art/api/v1/get-rows",
+      "/api/v1/get-rows",
+      // "https://www.desopixel.art/api/v1/get-rows",
       {}
     )
       .then((resp) => resp.json())
@@ -71,8 +72,8 @@ function Homepage() {
 
   const getRowsFromApiToComparison = async () => {
     await fetch(
-      // "/api/v1/get-rows",
-      "https://www.desopixel.art/api/v1/get-rows",
+      "/api/v1/get-rows",
+      // "https://www.desopixel.art/api/v1/get-rows",
       {}
     )
       .then((resp) => resp.json())
@@ -83,11 +84,15 @@ function Homepage() {
 
   const submitPixel = async () => {
     await fetch(
-      // "/api/v1/add-rows",
-      "https://www.desopixel.art/api/v1/add-rows",
+      "/api/v1/add-rows",
+      // "https://www.desopixel.art/api/v1/add-rows",
       {
         method: "POST",
-        body: JSON.stringify({ rows: rows }),
+        body: JSON.stringify({
+          rows: rows,
+          pixelCount: count,
+          publicKey: publicKey,
+        }),
         headers: {
           Accept: "application/json",
           "Content-Type": "application/json",
