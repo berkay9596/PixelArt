@@ -12,7 +12,8 @@ export function DesoProvider({ children }) {
   const [desoIdentity, setDesoIdentity] = useState(null);
   const [desoApi, setDesoApi] = useState(null);
   const [publicKey, setPublicKey] = useState(null);
-  
+  const [thxHex, setThxHex] = useState(null);
+
   useEffect(() => {
     const di = new DesoIdentity();
     setDesoIdentity(di);
@@ -34,10 +35,15 @@ export function DesoProvider({ children }) {
     navigate("/");
   };
   const sendDeso = async (publicKey, amount) => {
-    let createSend = await desoApi?.sendDeso(publicKey, 1000000 * amount);
+    let createSend = await desoApi?.sendDeso(publicKey, 1 * amount);
+    console.log("createsend", createSend);
     let transactionHex = await createSend?.TransactionHex;
+    setThxHex(transactionHex);
+    console.log("transactionHex", transactionHex);
     let signedTransactionHex = await desoIdentity?.signTxAsync(transactionHex);
+    console.log("signedTransactionHex", signedTransactionHex);
     let rtnSend = await desoApi?.submitTransaction(signedTransactionHex);
+    console.log("rtnSend", rtnSend);
     console.log(rtnSend);
   };
 
@@ -57,6 +63,7 @@ export function DesoProvider({ children }) {
         sendDeso,
         publicKey,
         getSingleProfile,
+        thxHex
       }}
     >
       {children}

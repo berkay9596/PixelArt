@@ -26,10 +26,8 @@ function Homepage() {
   const [socketChange, setSocketChange] = useState(0);
   const [isSubmitted, setIsSubmitted] = useState(0);
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
-  const {
-    // sendDeso,
-    getSingleProfile,
-  } = useContext(DesoContext);
+  const publicKey = token?.publicKey;
+  const { sendDeso, getSingleProfile, thxHex } = useContext(DesoContext);
 
   const fillColor = async (rowIndex, colIndex) => {
     if (token) {
@@ -92,6 +90,7 @@ function Homepage() {
           rows: rows,
           pixelCount: count,
           publicKey: publicKey,
+          txnHashHex: thxHex,
         }),
         headers: {
           Accept: "application/json",
@@ -166,7 +165,13 @@ function Homepage() {
           top: 0,
         }}
       ></iframe>
-
+      <button
+        onClick={() =>
+          sendDeso("BC1YLhCt32Vi8pWxT1iCGrV5oYgqUQJ92CYGtYDTUJuAyao4KppBTdB", 1)
+        }
+      >
+        Deneme
+      </button>
       <div className="flex flex-col gap-5 transition-all  text-center my-12">
         <input type="checkbox" id="my-modal" className="modal-toggle" />
 
