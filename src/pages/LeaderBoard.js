@@ -82,7 +82,7 @@ const LeaderBoard = () => {
     <div style={{ minHeight: "65vh" }}>
       {token ? (
         <>
-          {show ? (
+          {show || profileNames.length === 0 ? (
             <div className="text-white flex flex-col container mx-auto prose board-bg my-12">
               <h3 className="my-5 board text-center">Leaderboard</h3>
               <div className="flex items-between mx-6">
