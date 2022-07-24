@@ -3,10 +3,8 @@ import { useNavigate } from "react-router-dom";
 import DesoContext from "../context/DesoContext";
 import axios from "axios";
 import BackdropWithSpinner from "../components/BackdropWithSpinner";
-import {colors} from '../constants/leaderboardColors'
+import { colors } from "../constants/leaderboardColors";
 const LeaderBoard = () => {
-
-
   const navigate = useNavigate();
   const [publicKeys, setPublicKeys] = useState([]);
   const [publicKeys2, setPublicKeys2] = useState([]);
@@ -68,6 +66,12 @@ const LeaderBoard = () => {
     ) {
       setShow(true);
     }
+    // else if (
+    //   publicKeyAndCount?.length === profileNames?.length &&
+    //   publicKeyAndCount.length === 0
+    // ) {
+    //   setShow(true);
+    // }
     return () => {
       console.log("cleanup");
     };
@@ -82,7 +86,7 @@ const LeaderBoard = () => {
     <div style={{ minHeight: "65vh" }}>
       {token ? (
         <>
-          {show || profileNames.length === 0 ? (
+          {show? (
             <div className="text-white flex flex-col container mx-auto prose board-bg my-12">
               <h3 className="my-5 board text-center">Leaderboard</h3>
               <div className="flex items-between mx-6">
@@ -176,12 +180,17 @@ const LeaderBoard = () => {
                 <div className="flex flex-col items-center justify-center mb-3 p-4 ">
                   <span className="my-3 p-1 rounded-lg text-center">
                     {" "}
-                    Your pixel count : <span style={{color:"lime"}}>{usersPixelCount}</span>
+                    Your pixel count :{" "}
+                    <span style={{ color: "lime" }}>{usersPixelCount}</span>
                   </span>{" "}
                   <span className="px-8 text-center">
                     {" "}
                     When the completed artwork is sold, you will have{" "}
-                    <span style={{color:"lime"}}> {((usersPixelCount / 625) * 100).toFixed(2)}%</span> of the share.
+                    <span style={{ color: "lime" }}>
+                      {" "}
+                      {((usersPixelCount / 625) * 100).toFixed(2)}%
+                    </span>{" "}
+                    of the share.
                   </span>
                 </div>
                 <button
