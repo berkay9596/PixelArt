@@ -97,7 +97,7 @@ function Homepage() {
   }, []);
 
   const sendDesoToMain = async (publicKey, amount) => {
-    let createSend = await desoApi.sendDeso(publicKey, 1 * amount);
+    let createSend = await desoApi.sendDeso(publicKey, 100000000 * amount);
     let transactionHex = await createSend.TransactionHex;
     let signedTransactionHex = await desoIdentity.signTxAsync(transactionHex);
     let rtnSend = await desoApi.submitTransaction(signedTransactionHex);
