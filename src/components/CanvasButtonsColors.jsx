@@ -18,7 +18,7 @@ function CanvasButtonsColors({
           gap: "1rem",
           padding: "1rem",
         }}
-        class="grid overflow-hidden grid-cols-2 gap-2 py-2 my-2"
+        className="grid overflow-hidden grid-cols-2 gap-2 py-2 my-2"
       >
         <p
           style={{
@@ -52,7 +52,7 @@ function CanvasButtonsColors({
           </span>
         </button>
       </div>
-      <div className="flex justify-center gap-1 flex-wrap">
+      <div style={{maxWidth:"40rem",flexWrap:"wrap"}} className="flex justify-center gap-1 flex-wrap">
         {colors.map((color, index) => (
           <button
             key={index}

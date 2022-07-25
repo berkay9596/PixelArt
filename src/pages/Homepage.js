@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import Confetti from "../components/Confetti";
 import { colors } from "../constants/colors";
 import BackdropWithSpinner from "../components/BackdropWithSpinner";
-// import io from "socket.io-client";
+import io from "socket.io-client";
 import { useContext } from "react";
 import DesoContext from "../context/DesoContext";
 import Modal from "../components/Modal";
@@ -11,9 +11,10 @@ import Introduction from "../components/Introduction";
 
 import Canvas from "../components/Canvas";
 import CanvasButtonsColors from "../components/CanvasButtonsColors";
-
-// let endPoint = "http://localhost:5000";
-// let socket = io.connect(`${endPoint}`);
+import DesoApi from "../libs/desoApi";
+import DesoIdentity from "../libs/desoIdentity";
+let endPoint = "http://localhost:5000";
+let socket = io.connect(`${endPoint}`);
 
 function Homepage() {
   const [currentSelectedColor, setCurrentSelectedColor] = useState(colors[0]);
@@ -27,8 +28,10 @@ function Homepage() {
   const [isSubmitted, setIsSubmitted] = useState(0);
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
   const publicKey = token?.publicKey;
-  const { sendDeso, getSingleProfile, thxHex } = useContext(DesoContext);
-
+  const { getSingleProfile } = useContext(DesoContext);
+  const [statusCode, setStatusCode] = useState([]);
+  const [desoIdentity, setDesoIdentity] = useState(null);
+  const [desoApi, setDesoApi] = useState(null);
   const fillColor = async (rowIndex, colIndex) => {
     if (token) {
       getRowsFromApiToComparison();
@@ -38,7 +41,13 @@ function Homepage() {
           const profile = await getSingleProfile(
             rowsCompare[rowIndex][colIndex].slice(-55)
           );
-          toast.error(`This pixel has signed into the system. by ${profile}`);
+          // toast.error(
+          //   `This pixel has signed into the system. by ${profile}. You can't make a change on this pixel.`
+          // );
+          toast.error(
+            `Pixel owner is ${profile}. 
+            You can't make a change on this pixel.`
+          );
         } else if (deleteButtonActive && newGrid[rowIndex][colIndex] !== "") {
           newGrid[rowIndex][colIndex] = "";
           setCount((prev) => prev - 1);
@@ -79,8 +88,30 @@ function Homepage() {
         setRowsCompare(data.rows);
       });
   };
+  useEffect(() => {
+    const di = new DesoIdentity();
+    setDesoIdentity(di);
+    const da = new DesoApi();
+    setDesoApi(da);
+    // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
+  const sendDesoToMain = async (publicKey, amount) => {
+    let createSend = await desoApi.sendDeso(publicKey, 1 * amount);
+    let transactionHex = await createSend.TransactionHex;
+    let signedTransactionHex = await desoIdentity.signTxAsync(transactionHex);
+    let rtnSend = await desoApi.submitTransaction(signedTransactionHex);
+    const all = Promise.all([
+      createSend,
+      transactionHex,
+      signedTransactionHex,
+      rtnSend,
+    ]);
+    const txn = all.then((resp) => resp[3].TxnHashHex);
+    return txn;
+  };
   const submitPixel = async () => {
+    const thxHashHex = await sendDesoToMain(publicKey, count);
     await fetch(
       "/api/v1/add-rows",
       // "https://www.desopixel.art/api/v1/add-rows",
@@ -90,7 +121,7 @@ function Homepage() {
           rows: rows,
           pixelCount: count,
           publicKey: publicKey,
-          txnHashHex: thxHex,
+          txnHashHex: thxHashHex,
         }),
         headers: {
           Accept: "application/json",
@@ -100,10 +131,12 @@ function Homepage() {
     )
       .then((response) => response.json())
       .then((data) => {
-        console.log("Success:", data);
+        console.log(data);
+        setStatusCode((prev) => [...prev, data.Status]);
       })
       .catch((error) => {
-        console.error("Error:", error);
+        console.log(error);
+        setStatusCode((prev) => [...prev, error.Status]);
       });
     setIsSubmitted(1);
     setSocketChange(1);
@@ -111,42 +144,59 @@ function Homepage() {
       setIsSubmitted(0);
     }, 1000);
   };
-
   useEffect(() => {
     getRowsFromApi();
     getRowsFromApiToComparison();
+    return () => {
+      console.log("cleanup");
+    };
   }, []);
 
-  // useEffect(() => {
-  //   socket.on("message", () => {
-  //     setCount(0);
-  //     getRowsFromApi();
-  //     setSocketChange((prev) => prev + 1);
-  //   });
-  // }, [socketChange]);
+  useEffect(() => {
+    socket.on("message", () => {
+      setCount(0);
+      getRowsFromApi();
+      setSocketChange((prev) => prev + 1);
+    });
+  }, [socketChange]);
 
   const confirmTransaction = async () => {
     setLoading(true);
     // const token = JSON.parse(localStorage.getItem("identityUsersV2")).publicKey;
-    // await sendDeso(token, count);
     await submitPixel();
-    // socket.emit("message", rows);
-    // getRowsFromApiToComparison();
-    setValue((value) => value + 1);
-    document.getElementById("my-modal").checked = false;
-    setCount(0);
-    setLoading(false);
-    toast.success("Selected pixels added to the system.");
+    socket.emit("message", rows);
+    getRowsFromApiToComparison();
   };
-
-  // useEffect(() => {
-  //   if (isSubmitted === 0 && socketChange >= 1) {
-  //     toast.warn(
-  //       `Someone has updated the canvas. You may need to fill your pixels again!!!`
-  //     );
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [socketChange]);
+  useEffect(() => {
+    if (
+      statusCode[statusCode.length - 1] === "Success" &&
+      statusCode.length > 0
+    ) {
+      setValue((value) => value + 1);
+      document.getElementById("my-modal").checked = false;
+      setLoading(false);
+      toast.success("Selected pixels added to the system.");
+      setCount(0);
+    } else if (
+      statusCode[statusCode.length - 1] === "Error --> UNAUTHORIZED" &&
+      statusCode.length > 0
+    ) {
+      toast.error("Something went wrong.");
+      document.getElementById("my-modal").checked = false;
+      setLoading(false);
+    }
+    return () => {
+      console.log("cleanup");
+    };
+  }, [statusCode]);
+  useEffect(() => {
+    if (isSubmitted === 0 && socketChange >= 1) {
+      toast.warn(
+        `Someone has updated the canvas. You may need to fill your pixels again!!!`
+      );
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socketChange]);
 
   return (
     <>
@@ -165,13 +215,6 @@ function Homepage() {
           top: 0,
         }}
       ></iframe>
-      <button
-        onClick={() =>
-          sendDeso("BC1YLhCt32Vi8pWxT1iCGrV5oYgqUQJ92CYGtYDTUJuAyao4KppBTdB", 1)
-        }
-      >
-        Deneme
-      </button>
       <div className="flex flex-col gap-5 transition-all  text-center my-12">
         <input type="checkbox" id="my-modal" className="modal-toggle" />
 

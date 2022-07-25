@@ -23,7 +23,7 @@ const Introduction = () => {
         the canvas.
       </p>
 
-      <h3>Earn by contributing</h3>
+      <h2>Earn by contributing</h2>
       <p
         style={{
           padding: "0 1.5rem 0 1.5rem",
@@ -46,26 +46,36 @@ const Introduction = () => {
       </p>
 
       <ul className="steps steps-vertical lg:steps-horizontal mx-2 p-0">
-        <li className="step step-success ">
-          <span className="mx-4 mt-6 lg:mx-5 ml-2">
+        <li className="step step-success m-0">
+          <span 
+          className="mx-4 mt-6 lg:mx-5 ml-2"
+
+          >
             Paint any pixels you want on any available canvas.
           </span>
         </li>
-        <li className="step step-success ">
-          <span className="mx-0 mt-6 lg:mx-4 mr-2">
+        <li className="step step-success m-0">
+          <span 
+          className="mx-0 mt-6 lg:mx-4 mr-2"
+          >
             {" "}
             The more you paint, the bigger share of the painting you get.
           </span>
         </li>
-        <li className="step step-success ">
-          <span className="mx-0 mt-10 lg:mx-1 mr-12">
+        <li className="step step-success m-0">
+          <span 
+          className="mx-0 mt-6 lg:mx-1 mr-12"
+
+          >
             {" "}
             After all pixels are set, the canvas is put up for auction. Anyone
             can make a bid.
           </span>
         </li>
-        <li className="step step-success ">
-          <span className="mx-0 mt-5 lg:mx-4 mr-8">
+        <li className="step step-success m-0">
+          <span 
+          className="mx-0 mt-5 lg:mx-4 mr-8 ml-1"
+          >
             {" "}
             85% of the winning bid from auction is distributed to the painters.
           </span>

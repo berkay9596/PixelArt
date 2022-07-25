@@ -31,7 +31,7 @@ const LeaderBoard = () => {
     deneme();
     setTimeout(() => {
       setStatus(true);
-    }, 400);
+    }, 450);
     return () => {
       console.log("cleanup");
     };
@@ -91,7 +91,7 @@ const LeaderBoard = () => {
         <>
           {show ? (
             <div className="text-white flex flex-col container mx-auto prose board-bg my-12">
-              <h3 className="my-5 board text-center">Leaderboard</h3>
+              <h2 className="my-5 board text-center">Leaderboard</h2>
               <div className="flex items-between mx-6">
                 <div>
                   <span style={{ marginLeft: "3px" }} className="relative">

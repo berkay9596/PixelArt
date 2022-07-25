@@ -2,6 +2,8 @@ import React, { useContext, useRef } from "react";
 import DesoContext from "../context/DesoContext";
 import Logo from "./Logo";
 import { useNavigate } from "react-router-dom";
+import LeaderboardIcon from "@mui/icons-material/Leaderboard";
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 const Navbar = () => {
   const navigate = useNavigate();
   const { isLoggedIn, desoLogin, desoLogout } = useContext(DesoContext);
@@ -27,9 +29,8 @@ const Navbar = () => {
               tabIndex="0"
               className="btn btn-ghost btn-circle avatar"
               onClick={handleClick}
-
             >
-              <div className="w-10 rounded-full">
+              <div className="w-100 rounded-full">
                 <img
                   src={`https://node.deso.org/api/v0/get-single-profile-picture/${token?.publicKey}`}
                   alt="profile"
@@ -43,21 +44,30 @@ const Navbar = () => {
               onClick={handleClick}
             >
               <button
-                className="btn btn-primary my-1"
-                style={{ minWidth: "9rem" }}
+                className="btn btn-primary my-1 mr-3"
+                style={{
+                  minWidth: "10rem",
+                  maxWidth:"10rem"
+                }}
                 onClick={() => {
                   navigate("/leaderboard");
                   window.scrollTo({ top: 0, behavior: "smooth" });
                 }}
               >
-                LEADERBOARD
+                <div className="flex flex-row items-center justify-center">
+                  <span className="pt-1 mr-1"> LEADERBOARD</span>
+                  <LeaderboardIcon />
+                </div>
               </button>
               <button
-                className="btn btn-secondary "
+                className="btn btn-secondary mr-3 my-1 "
                 onClick={() => desoLogout()}
-                style={{ minWidth: "9rem" }}
+                style={{ minWidth: "10rem", maxWidth:"10rem" }}
               >
-                LOGOUT
+                <div className="flex flex-row items-center px-5 justify-center">
+                  <span className="pt-1 mr-1"> LOGOUT</span>
+                  <ExitToAppIcon />
+                </div>
               </button>
             </ul>
           </div>

@@ -3,11 +3,11 @@ const Modal = (props) => {
   return (
     <div className="modal">
       <div className="modal-box flex items-center flex-col bg-black">
-        <h3 className="font-bold text-lg">
+        <h3  className="font-bold text-lg">
           You are about to own pixel at Desopixelart
         </h3>
-        <p className="py-3">Total Pixel : {props.count}</p>
-        <p className="py-3">Total Price : {props.count / 10} Deso</p>
+        <p className="py-3">Total Pixel : <span style={{color:"lime"}}>{props.count}</span></p>
+        <p className="py-3">Total Price : <span style={{color:"lime"}}>{props.count / 10} Deso</span> </p>
         <p className="py-3">Do you confirm the transaction?</p>
         <div className="modal-action">
           <label
