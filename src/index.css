@@ -43,7 +43,7 @@ p {
   @apply text-neutral;
 }
 
-#confirm:hover {
+#confirm:hover{
   opacity: 0.8;
   @apply bg-success;
   @apply border-green-600;
@@ -98,4 +98,8 @@ li {
 
 .art {
   color: white !important;
+}
+
+div .react-colorful {
+  width: 21.5rem;
 }

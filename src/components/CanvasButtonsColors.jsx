@@ -1,6 +1,9 @@
+import { useState } from "react";
 import eraser from "../images/eraser.svg";
 import { colors } from "../constants/colors";
 import { toast } from "react-toastify";
+import { HexColorPicker } from "react-colorful";
+
 function CanvasButtonsColors({
   deleteButtonActive,
   setDeleteButtonActive,
@@ -9,6 +12,8 @@ function CanvasButtonsColors({
   setCurrentSelectedColor,
 }) {
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
+  // const [color, setColor] = useState("#aabbcc");
+  // console.log("currentselectedcolor", currentSelectedColor);
   return (
     <div className="flex items-center justify-center flex-col flex-wrap mb-12">
       <div
@@ -52,35 +57,53 @@ function CanvasButtonsColors({
           </span>
         </button>
       </div>
-      <div style={{maxWidth:"40rem",flexWrap:"wrap"}} className="flex justify-center gap-1 flex-wrap">
-        {colors.map((color, index) => (
+      <div
+        style={{ maxWidth: "40rem", flexWrap: "wrap" }}
+        className="flex justify-center gap-1 flex-wrap"
+      >
+        {/* {colors.map((color, index) => (
           <button
             key={index}
             onClick={() => {
               setCurrentSelectedColor(color);
               setDeleteButtonActive(false);
             }}
-            className={`w-10 h-10 flex items-center justify-center rounded-full ${color}`}
+            style={{ backgroundColor: `${color}` }}
+            className={`w-10 h-10 flex items-center justify-center rounded-full
+            //  ${color}`
+            }
           >
             <div
+              // style={{ background: `${currentSelectedColor}` }}
               className={`${
                 color === currentSelectedColor ? "w-8 h-8" : "w-0 h-0"
               } transition-all bg-zinc-800 rounded-full`}
             />
           </button>
-        ))}
+        ))} */}
+        <HexColorPicker
+          color={currentSelectedColor}
+          onChange={setCurrentSelectedColor}
+          // onClick={() => {
+          //   setCurrentSelectedColor(color);
+          //   setDeleteButtonActive(false);
+          // }}
+        />
       </div>
       <div className="py-1 my-2"></div>
 
       <button
         onClick={() => {
-          if (token) {
-            if (count > 0) {
-              document.getElementById("my-modal").checked = true;
-            } else {
-              toast.error("You can't submit without selecting any pixel.");
-            }
-          }
+          // if (token) {
+          //   if (count > 0) {
+          //     document.getElementById("my-modal").checked = true;
+          //   } else {
+          //     toast.error("You can't submit without selecting any pixel.");
+          //   }
+          // } else {
+          //   toast.error("You must be logged in to submit your pixel.");
+          // }
+          toast.error("It will be active soon.")
         }}
         id="submit"
         className="btn btn-primary"

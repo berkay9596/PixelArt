@@ -15,7 +15,7 @@ class DesoApi {
       AmountNanos: amount,
       SenderPublicKeyBase58Check: publicKey,
       RecipientPublicKeyOrUsername:
-        "BC1YLiVd3t2XfDutMgVFPeShG3RiPGGrSa1qJ5b5f23sHyFAd2nrqU2",
+        "BC1YLiQANnwXpTct2WAECVsvAi2gDTsh8otExTAauEMZChpKcugpsDH",
     };
     try {
       const result = await this.getClient().post(path, data);

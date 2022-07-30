@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import Confetti from "../components/Confetti";
 import { colors } from "../constants/colors";
 import BackdropWithSpinner from "../components/BackdropWithSpinner";
-import io from "socket.io-client";
+// import io from "socket.io-client";
 import { useContext } from "react";
 import DesoContext from "../context/DesoContext";
 import Modal from "../components/Modal";
@@ -13,19 +13,19 @@ import Canvas from "../components/Canvas";
 import CanvasButtonsColors from "../components/CanvasButtonsColors";
 import DesoApi from "../libs/desoApi";
 import DesoIdentity from "../libs/desoIdentity";
-let endPoint = "http://localhost:5000";
-let socket = io.connect(`${endPoint}`);
+// let endPoint = "http://localhost:5000";
+// let socket = io.connect(`${endPoint}`);
 
 function Homepage() {
-  const [currentSelectedColor, setCurrentSelectedColor] = useState(colors[0]);
+  const [currentSelectedColor, setCurrentSelectedColor] = useState("#aabbcc");
   const [value, setValue] = useState(0);
   const [count, setCount] = useState(0);
   const [rows, setRows] = useState([]);
   const [rowsCompare, setRowsCompare] = useState([]);
   const [deleteButtonActive, setDeleteButtonActive] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [socketChange, setSocketChange] = useState(0);
-  const [isSubmitted, setIsSubmitted] = useState(0);
+  // const [socketChange, setSocketChange] = useState(0);
+  // const [isSubmitted, setIsSubmitted] = useState(0);
   const token = JSON.parse(localStorage.getItem("identityUsersV2"));
   const publicKey = token?.publicKey;
   const { getSingleProfile } = useContext(DesoContext);
@@ -41,9 +41,6 @@ function Homepage() {
           const profile = await getSingleProfile(
             rowsCompare[rowIndex][colIndex].slice(-55)
           );
-          // toast.error(
-          //   `This pixel has signed into the system. by ${profile}. You can't make a change on this pixel.`
-          // );
           toast.error(
             `Pixel owner is ${profile}. 
             You can't make a change on this pixel.`
@@ -58,17 +55,19 @@ function Homepage() {
             colIndex
           ] = `${currentSelectedColor} ${token.publicKey}`;
           setCount((prev) => prev + 1);
+          console.log("currentSelectedColorcurrentSelectedColor",currentSelectedColor)
+
         }
       }
     } else {
-      toast.error("You need to login first.");
+      toast.error("You must be logged in to selecting any pixel.");
     }
   };
 
   const getRowsFromApi = async () => {
     await fetch(
-      "/api/v1/get-rows",
-      // "https://www.desopixel.art/api/v1/get-rows",
+      // "/api/v1/get-rows",
+      "https://www.desopixel.art/api/v1/get-rows",
       {}
     )
       .then((resp) => resp.json())
@@ -79,8 +78,8 @@ function Homepage() {
 
   const getRowsFromApiToComparison = async () => {
     await fetch(
-      "/api/v1/get-rows",
-      // "https://www.desopixel.art/api/v1/get-rows",
+      // "/api/v1/get-rows",
+      "https://www.desopixel.art/api/v1/get-rows",
       {}
     )
       .then((resp) => resp.json())
@@ -97,7 +96,7 @@ function Homepage() {
   }, []);
 
   const sendDesoToMain = async (publicKey, amount) => {
-    let createSend = await desoApi.sendDeso(publicKey, 1 * amount);
+    let createSend = await desoApi.sendDeso(publicKey, 100000000 * amount);
     let transactionHex = await createSend.TransactionHex;
     let signedTransactionHex = await desoIdentity.signTxAsync(transactionHex);
     let rtnSend = await desoApi.submitTransaction(signedTransactionHex);
@@ -138,11 +137,11 @@ function Homepage() {
         console.log(error);
         setStatusCode((prev) => [...prev, error.Status]);
       });
-    setIsSubmitted(1);
-    setSocketChange(1);
-    setTimeout(() => {
-      setIsSubmitted(0);
-    }, 1000);
+    // setIsSubmitted(1);
+    // setSocketChange(1);
+    // setTimeout(() => {
+    //   setIsSubmitted(0);
+    // }, 1000);
   };
   useEffect(() => {
     getRowsFromApi();
@@ -152,19 +151,19 @@ function Homepage() {
     };
   }, []);
 
-  useEffect(() => {
-    socket.on("message", () => {
-      setCount(0);
-      getRowsFromApi();
-      setSocketChange((prev) => prev + 1);
-    });
-  }, [socketChange]);
+  // useEffect(() => {
+  //   socket.on("message", () => {
+  //     setCount(0);
+  //     getRowsFromApi();
+  //     setSocketChange((prev) => prev + 1);
+  //   });
+  // }, [socketChange]);
 
   const confirmTransaction = async () => {
     setLoading(true);
     // const token = JSON.parse(localStorage.getItem("identityUsersV2")).publicKey;
     await submitPixel();
-    socket.emit("message", rows);
+    // socket.emit("message", rows);
     getRowsFromApiToComparison();
   };
   useEffect(() => {
@@ -175,7 +174,9 @@ function Homepage() {
       setValue((value) => value + 1);
       document.getElementById("my-modal").checked = false;
       setLoading(false);
-      toast.success("Selected pixels added to the system.");
+      toast.success(
+        "Selected pixels added to the system. You can view your stats in the Leaderboard page."
+      );
       setCount(0);
     } else if (
       statusCode[statusCode.length - 1] === "Error --> UNAUTHORIZED" &&
@@ -189,17 +190,24 @@ function Homepage() {
       console.log("cleanup");
     };
   }, [statusCode]);
-  useEffect(() => {
-    if (isSubmitted === 0 && socketChange >= 1) {
-      toast.warn(
-        `Someone has updated the canvas. You may need to fill your pixels again!!!`
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [socketChange]);
+  // useEffect(() => {
+  //   if (isSubmitted === 0 && socketChange >= 1) {
+  //     toast.warn(
+  //       `Someone has updated the canvas. You may need to fill your pixels again!!!`
+  //     );
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [socketChange]);
 
   return (
     <>
+      {/* 
+import { HexColorPicker } from "react-colorful";
+
+const YourComponent = () => {
+  const [color, setColor] = useState("#aabbcc");
+  return <HexColorPicker color={color} onChange={setColor} />;
+} */}
       <iframe
         title="desoidentity"
         id="identity"

@@ -31,7 +31,7 @@ const LeaderBoard = () => {
     deneme();
     setTimeout(() => {
       setStatus(true);
-    }, 450);
+    }, 700);
     return () => {
       console.log("cleanup");
     };
@@ -55,7 +55,6 @@ const LeaderBoard = () => {
       }
     };
     usernameLoop();
-
     return () => {
       console.log("cleanup");
     };
@@ -65,25 +64,21 @@ const LeaderBoard = () => {
   useEffect(() => {
     if (
       publicKeyAndCount?.length === profileNames?.length &&
-      publicKeyAndCount.length > 0
+      profileNames.length > 0
     ) {
       setShow(true);
     }
-    // else if (
-    //   publicKeyAndCount?.length === profileNames?.length &&
-    //   publicKeyAndCount.length === 0
-    // ) {
-    //   setShow(true);
-    // }
     return () => {
       console.log("cleanup");
     };
   }, [publicKeyAndCount, profileNames]);
+
   useEffect(() => {
     getSingleProfile(token?.publicKey).then((resp) => setLoggedUser(resp));
     return () => {
       console.log("cleanup");
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
   return (
     <div style={{ minHeight: "65vh" }}>
